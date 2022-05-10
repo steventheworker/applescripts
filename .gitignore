@@ -6,3 +6,4 @@ iCloud Photos.app
 iCloud Drive.app
 
 *.scpt
+*.DS_Store
