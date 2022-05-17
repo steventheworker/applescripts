@@ -1,5 +1,8 @@
+tell application "BetterTouchTool" to set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
+tell application "AltTab" to showApp appBID tarAppID
 tell application "System Events"
-	key code 50 using {command down}
-	delay 0.334
-	key code 49
+	delay 0.134
+	key code 124 # right
+	delay 0.2
+	key code 49 # space
 end tell
