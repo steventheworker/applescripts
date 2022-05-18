@@ -18,7 +18,7 @@ and finally, import the triggers (in "BTT Settings" folder) to BetterTouchTool i
 
 The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT cycling (just like on Windows™️).
 
-Note: if an app doesn't work, remap on BTT cmd-w/cmd-shift-w to send a keyboard shortcut w/ "prevent recursive triggers" checked (for default behavior). And please raise an issue here.
+Note: if an app isn't closing, remap cmd+w/cmd+shift+w (for that specific app) on BTT to itself w/ "prevent recursive triggers" checked (for default behavior). And please raise an issue here. Cheers 🍺
 
 &nbsp;
 
