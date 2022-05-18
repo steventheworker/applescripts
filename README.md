@@ -14,7 +14,7 @@ and finally, import the triggers (in "BTT Settings" folder) to BetterTouchTool i
 
 # Window management:
 
-"click-cmd-cycle-windows" & "click-shift-file-new" gives Windows™️ dock behavior where holding shift while clicking a dock icon gives a new window & holding cmd (while clicking) will cycle windows.
+"click-cmd-cycle-windows" & "click-shift-file-new" gives Windows™️ dock behavior where holding shift/cmd while clicking a dock icon creates a new window / cycles an apps windows.
 
 The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT cycling (just like on Windows™️).
 
@@ -22,7 +22,7 @@ Note: if an app doesn't work, remap on BTT cmd-w/cmd-shift-w to send a keyboard 
 
 &nbsp;
 
-# BetterTouchTool settings
+# BetterTouchTool features
 
 [System Preferences Setup](https://www.youtube.com/channel/UCBcY4PTKNWXDXTt6RsHGRjQ/videos) (video coming soon)
 
