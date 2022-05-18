@@ -1,7 +1,5 @@
+set RECLAIMFOCUS_PATH to "~/Desktop/important/SystemFiles"
 # if tab app / document app - only close tabs (via trigger "commandW" (not windows)) (apps SHOULD handle closing windows @ last/single tab)         # handled tab apps: Xcode, Visual Studio Code, Terminal, Chrome, Firefox, Safari, PyCharm, Maps, iTerm2, Finder, Adobe Photoshop & Illustrator & 
-# config (set _PATH's to "." to run from same directory as this script)
-set RECLAIMFOCUS_PATH to "~/proj/Swift"
-
 # get active app
 global tarApp
 global tarAppPName
