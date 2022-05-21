@@ -55,8 +55,8 @@ tell application "System Events"
 			end repeat
 			if windowTitle is equal to "Get Started" then set closeTab to true # VSCode
 		end if
-		if tarApp is equal to "Maps" then if exists tab group 1 of window 1 then set closeTab to true # 1 tab left when element DNE
-		if tarApp is equal to "Maps" or tarApp is equal to "Mail" or tarApp is equal to "Terminal" or tarApp is equal to "Finder" or tarApp is equal to "Script Editor"
+		if tarApp is equal to "Maps" then if exists tab group 1 of window 1 then set closeTab to true # 1 tab left when element DNE (special cmd-w (on BTT))
+		if tarApp is equal to "Maps" or tarApp is equal to "Mail" or tarApp is equal to "Terminal" or tarApp is equal to "Finder" or tarApp is equal to "TextEdit" or tarApp is equal to "Script Editor"
 			set tabCount to 1 # these app windows can't have less than 1 tabs
 			if exists tab group 1 of window 1 then set tabCount to ((count of UI elements of tab group 1 of window 1) - 1) # minus the "+" button (add tab button)
 			if tabCount > 1 then set closeTab to true
