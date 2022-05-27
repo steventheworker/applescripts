@@ -243,9 +243,10 @@ on quitAt0(_a)
 		tell application "System Events"
 			tell process tarAppPName
 				if tarApp is equal to "Accessibility Inspector" # apps that always have a floating window open (shows on process, but not AltTab)
-					if (winCount is equal to 1 and (count of windows) is equal to 1) then set didLastWindowClose to my numWindowsAllSpaces(tarApp) is equal to 0
+					set didLastWindowClose to (winCount is equal to 1 and (count of windows) is equal to 1)Â
+							and (my numWindowsAllSpaces(tarApp) is equal to 0)
 				else
-					if (count of windows < 1) then set didLastWindowClose to my numWindowsAllSpaces(tarApp) < 1 # other apps that close @ 0
+					set didLastWindowClose to (count of windows < 1) and (my numWindowsAllSpaces(tarApp) < 1) # other apps that close @ 0
 				end if
 				if (didLastWindowClose)
 					if (tarApp is equal to "Mail" or tarApp is equal to "Spark")
