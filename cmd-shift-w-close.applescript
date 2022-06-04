@@ -104,6 +104,7 @@ tell application "System Events"
       set winCount to (count of windows)
       if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
 		set tarWin to window 1
+		if tarApp is equal to "KeyCastr" then set tarWin to window 2 # apps where window 1 === uncloseable overlay
 		if nextApp is equal to tarApp and winCount > 1 then set tarWin to window 2
 		try
 			close tarWin
