@@ -76,6 +76,8 @@ tell application "System Events"
 					click menu item "New Window" of menu 1 of menu bar item "Shell"
 				else if tarApp is equal to "Terminal"
 					click menu item "New Window with Profile - Pro" of menu 1 of menu item "New Window" of menu 1 of menu bar item "Shell"
+				else if tarApp is equal to "Emacs"
+					click menu item "New Frame	C-x 5 2" of menu 1 of menu bar item "File"
 				else
 					# iterate through "File" / "File->New" menu
 					if not (menu bar item "File" exists) then return "Activated app, couldn't make a new window" # File submenu DNE

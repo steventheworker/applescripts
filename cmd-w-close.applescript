@@ -11,58 +11,60 @@ set tarAppPName to getPName(tarApp)
 set closeTab to false
 set winTitle to ""
 
-tell application "System Events"
-	tell process tarAppPName	# check tabs apps (by process)
-		set winCount to (count of windows)
-		set winTitle to title of window 1 # check if tab closed by title change (reclaimFocus)
-      # check if weird window that dissapears on switch (eg: "Colors" ((cmd+shift+c) in many apps like Stickies/Script Editor)) & for dialog windows & AXFullScreen windows
-		set isFullScreen to value of attribute "AXFullScreen" of window 1
-		set wid to (attributes of window 1) whose (name is equal to "AXIdentifier")
-		if count of wid > 0 then set wid to value of attribute "AXIdentifier" of window 1
-		set sub to subrole of window 1 # window subrole
-		set floats to (sub is equal to "AXSystemFloatingWindow" or sub is equal to "AXFloatingWindow")
-		if wid is equal to "open-panel" or isFullScreen or floats or sub is equal to "AXDialog" or sub is equal to "Quick Look"
-			tell application "BetterTouchTool" to trigger_named "commandW"
-			if winCount is equal to (count of windows) then click ((window 1)'s buttons whose subrole is "AXCloseButton")
-			return my quitAt0({tarApp, "'nextApp'", "floating window closed (with cycling)"})
-		end if
+if not (tarApp is equal to "Emacs") # apps that don't work by process (AT ALL)
+	tell application "System Events"
+		tell process tarAppPName	# check tabs apps (by process)
+			set winCount to (count of windows)
+			set winTitle to title of window 1 # check if tab closed by title change (reclaimFocus)
+			# check if weird window that dissapears on switch (eg: "Colors" ((cmd+shift+c) in many apps like Stickies/Script Editor)) & for dialog windows & AXFullScreen windows
+			set isFullScreen to value of attribute "AXFullScreen" of window 1
+			set wid to (attributes of window 1) whose (name is equal to "AXIdentifier")
+			if count of wid > 0 then set wid to value of attribute "AXIdentifier" of window 1
+			set sub to subrole of window 1 # window subrole
+			set floats to (sub is equal to "AXSystemFloatingWindow" or sub is equal to "AXFloatingWindow")
+			if wid is equal to "open-panel" or isFullScreen or floats or sub is equal to "AXDialog" or sub is equal to "Quick Look"
+				tell application "BetterTouchTool" to trigger_named "commandW"
+				if winCount is equal to (count of windows) then click ((window 1)'s buttons whose subrole is "AXCloseButton")
+				return my quitAt0({tarApp, "'nextApp'", "floating window closed (with cycling)"})
+			end if
 
-      # tab apps - tab exists? by process
-      if tarApp is equal to "Xcode"
-			tell group 2 of splitter group 1 of splitter group 1 of group 2 of splitter group 1 of window 1
-				set tabCount to 0
-				if exists tab group 1 then set tabCount to count of radio buttons of tab group 1
-				if tabCount > 0 then set closeTab to true
-			end tell
-      end if
-		# test title of window 1 (look for " Ñ " OR " Ð "  (YES, THEY'RE DIFFERENT))
-		if tarApp is equal to "Visual Studio Code" or tarAppPName is equal to "PyCharm"
-			set windowTitle to title of window 1
-			set lastTabPipe to -1 # testing title for " Ñ " (meaning there is a tab open)
-			set lastSpace to -1
-			set i to 0
-			repeat with curLetter in characters of windowTitle
-				set l to item (i + 1) of characters of windowTitle
-				if lastSpace is equal to i - 1 and (l is equal to "Ñ" or l is equal to "Ð") then set lastTabPipe to i
-				if l is equal to "Ê" then
-					set lastSpace to i
-					if lastTabPipe is equal to i - 1 then
-						set closeTab to true
-						exit repeat
+			# tab apps - tab exists? by process
+			if tarApp is equal to "Xcode"
+				tell group 2 of splitter group 1 of splitter group 1 of group 2 of splitter group 1 of window 1
+					set tabCount to 0
+					if exists tab group 1 then set tabCount to count of radio buttons of tab group 1
+					if tabCount > 0 then set closeTab to true
+				end tell
+			end if
+			# test title of window 1 (look for " Ñ " OR " Ð "  (YES, THEY'RE DIFFERENT))
+			if tarApp is equal to "Visual Studio Code" or tarAppPName is equal to "PyCharm"
+				set windowTitle to title of window 1
+				set lastTabPipe to -1 # testing title for " Ñ " (meaning there is a tab open)
+				set lastSpace to -1
+				set i to 0
+				repeat with curLetter in characters of windowTitle
+					set l to item (i + 1) of characters of windowTitle
+					if lastSpace is equal to i - 1 and (l is equal to "Ñ" or l is equal to "Ð") then set lastTabPipe to i
+					if l is equal to "Ê" then
+						set lastSpace to i
+						if lastTabPipe is equal to i - 1 then
+							set closeTab to true
+							exit repeat
+						end if
 					end if
-				end if
-				set i to (i + 1)
-			end repeat
-			if windowTitle is equal to "Get Started" then set closeTab to true # VSCode
-		end if
-		if tarApp is equal to "Maps" then if exists tab group 1 of window 1 then set closeTab to true # 1 tab left when element DNE (special cmd-w (on BTT))
-		if tarApp is equal to "Maps" or tarApp is equal to "Mail" or tarApp is equal to "Terminal" or tarApp is equal to "Finder" or tarApp is equal to "TextEdit" or tarApp is equal to "Script Editor"
-			set tabCount to 1 # these app windows can't have less than 1 tabs
-			if exists tab group 1 of window 1 then set tabCount to ((count of UI elements of tab group 1 of window 1) - 1) # minus the "+" button (add tab button)
-			if tabCount > 1 then set closeTab to true
-		end if
+					set i to (i + 1)
+				end repeat
+				if windowTitle is equal to "Get Started" then set closeTab to true # VSCode
+			end if
+			if tarApp is equal to "Maps" then if exists tab group 1 of window 1 then set closeTab to true # 1 tab left when element DNE (special cmd-w (on BTT))
+			if tarApp is equal to "Maps" or tarApp is equal to "Mail" or tarApp is equal to "Terminal" or tarApp is equal to "Finder" or tarApp is equal to "TextEdit" or tarApp is equal to "Script Editor"
+				set tabCount to 1 # these app windows can't have less than 1 tabs
+				if exists tab group 1 of window 1 then set tabCount to ((count of UI elements of tab group 1 of window 1) - 1) # minus the "+" button (add tab button)
+				if tabCount > 1 then set closeTab to true
+			end if
+		end tell
 	end tell
-end tell
+end if
 
 # tab apps - tab exists? by app
 if tarApp is equal to "Google Chrome" then tell application "Google Chrome" to if count of (tabs of window 1) > 1 then set closeTab to true
@@ -126,7 +128,7 @@ tell application tarApp
 	try
 		if nameTitle is equal to "" then set nameTitle to name of tarWin
 	end try
-	if nameTitle is equal to winTitle
+	if nameTitle is equal to winTitle or (winTitle is equal to "" and not (nameTitle is equal to "")) # or (couldn't get winTitle / winTitle wasn't set)
 		try
 			close tarWin
 			if (tarApp is equal to "iTerm" and winCount is equal to 1) # iTerm is weird (leaves no app activated after close)

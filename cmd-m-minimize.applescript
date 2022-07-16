@@ -17,8 +17,16 @@ tell application tarApp
 		set tarWin to window 1
 		if nextApp is equal to tarApp and winCount > 1 then set tarWin to window 2
 		set collapsed of tarWin to true
-		return {tarApp, nextApp, "application"}
+		return {tarApp, nextApp, "application1"}
    end try
+	try
+		if tarApp is equal to "Emacs"
+			tell application "Emacs" to set miniaturized of tarWin to true
+		else
+			set miniaturized of tarWin to true
+		end if
+		return {tarApp, nextApp, "application2"}
+	end try
 end tell
 
 # minimize by process

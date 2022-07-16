@@ -10,7 +10,7 @@ set tarApp to name of application id tarAppID
 set tarAppPName to getPName(tarApp)
 set winTitle to ""
 
-if not (tarAppPName is equal to "Premiere Pro") # all Premiere Pro components are floating (ignore; we want to close the full window in this script)
+if not (tarAppPName is equal to "Premiere Pro" or tarApp is equal to "Emacs") # all Premiere Pro components are floating (ignore; we want to close the full window in this script)
 	tell application "System Events"
 		tell process tarAppPName
 			# close weird window (by process) that dissapear on switch (eg: "Colors" ((cmd+shift+c) in many apps like Stickies/Script Editor)) & for dialog windows & AXFullScreen windows
@@ -86,7 +86,7 @@ tell application tarApp
 	try
 		if nameTitle is equal to "" then set nameTitle to name of tarWin
 	end try
-	if nameTitle is equal to winTitle
+	if nameTitle is equal to winTitle or (winTitle is equal to "" and not (nameTitle is equal to "")) # or (couldn't get winTitle / winTitle wasn't set)
 		try
 			close tarWin
 			if (tarApp is equal to "iTerm" and winCount is equal to 1) # iTerm is weird (leaves no app activated after close)
@@ -102,7 +102,7 @@ end tell
 tell application "System Events"
 	tell process tarAppPName
       set winCount to (count of windows)
-      if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
+		if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
 		set tarWin to window 1
 		if tarApp is equal to "KeyCastr" then set tarWin to window 2 # apps where window 1 === uncloseable overlay
 		if nextApp is equal to tarApp and winCount > 1 then set tarWin to window 2
