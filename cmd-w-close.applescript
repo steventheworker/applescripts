@@ -68,7 +68,11 @@ end tell
 if tarApp is equal to "Google Chrome" then tell application "Google Chrome" to if count of (tabs of window 1) > 1 then set closeTab to true
 if tarApp is equal to "Chromium" then tell application "Chromium" to if count of (tabs of window 1) > 1 then set closeTab to true
 if tarApp is equal to "Safari" then tell application "Safari" to if count of (tabs of window 1) > 1 then set closeTab to true
-if tarApp is equal to "iTerm" then tell application "iTerm2" to if count of (tabs of window 1) > 1 then set closeTab to true
+if tarApp is equal to "iTerm"
+	tell application "iTerm2"
+		if count of (tabs of window 1) > 1 or count of (sessions of current tab of window 1) > 1 then set closeTab to true
+	end tell
+end if
 
 # fallback to always trigger commandW (in tab apps / reclaimFocus is true)
 set reclaimFocus to false	# unscriptable & un-GUI scriptable apps (eg: electron based apps, Firefox, etc.) === Fallback to commandW + reclaimFocus   </3
