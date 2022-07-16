@@ -5,7 +5,15 @@ global tarApp
 global tarAppPName
 global tarAppID
 global winCount
-tell application "BetterTouchTool" to set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
+
+set tarAppID to ""
+tell application "iTerm" # make work with iTerm hotkey window
+	if (count of windows > 0) and ((not (current window is equal to missing value) and ((current window) is is hotkey window)) or (window 1 is is hotkey window))
+		set tarAppID to "com.googlecode.iterm2"
+	end if
+end tell
+if tarAppID is equal to "" then tell application "BetterTouchTool" to set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
+
 set tarApp to name of application id tarAppID
 set tarAppPName to getPName(tarApp)
 set winTitle to ""

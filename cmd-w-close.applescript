@@ -1,3 +1,4 @@
+-- delay 2
 set RECLAIMFOCUS_PATH to "~/Desktop/important/SystemFiles"
 # if tab app / document app - only close tabs (via trigger "commandW" (not windows)) (apps SHOULD handle closing windows @ last/single tab)         # handled tab apps: Xcode, Visual Studio Code, Terminal, Chrome, Firefox, Safari, PyCharm, Maps, iTerm2, Finder, Adobe Photoshop & Illustrator & 
 # get active app
@@ -5,7 +6,15 @@ global tarApp
 global tarAppPName
 global tarAppID
 global winCount
-tell application "BetterTouchTool" to set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
+
+set tarAppID to ""
+tell application "iTerm" # make work with iTerm hotkey window
+	if (count of windows > 0) and ((not (current window is equal to missing value) and ((current window) is is hotkey window)) or (window 1 is is hotkey window))
+		set tarAppID to "com.googlecode.iterm2"
+	end if
+end tell
+if tarAppID is equal to "" then tell application "BetterTouchTool" to set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
+
 set tarApp to name of application id tarAppID
 set tarAppPName to getPName(tarApp)
 set closeTab to false
