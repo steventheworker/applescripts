@@ -1,7 +1,10 @@
-# activate app under mouse (in dock)
+tell application "BetterTouchTool" to set displayedAppID to get_string_variable "BTTActiveAppBundleIdentifier"
+set displayedAppName to name of application id displayedAppID
+
+# get mouse position w/ objC (aka: use framework "AppKit")
 set X to 0
 set Y to 0
-use framework "AppKit" # get mouse position w/ objC (aka: use framework "AppKit")
+use framework "AppKit"
 tell the current application
 	set H to NSHeight(its NSScreen's mainScreen's frame)
 	tell [] & its NSEvent's mouseLocation
@@ -11,10 +14,7 @@ tell the current application
 end tell
 
 
-# get active app
-tell application "BetterTouchTool" to set displayedAppID to get_string_variable "BTTActiveAppBundleIdentifier"
-set displayedAppName to name of application id displayedAppID
-# get app under mouse
+# activate dock app under mouse (if inactive, else cycle)
 set tarApp to ""
 set tarAppIsRunning to false
 tell application "System Events"
@@ -37,48 +37,25 @@ tell application "System Events"
 			end repeat
 		end tell
 	end tell
-	
+
 	# no dock item under cursor => end script here
 	if tarApp is equal to "" then return "No target app"
-	
+
 	# launch / iterate menu items + new window
 	if not tarAppIsRunning then # launch app (via "do script" / AppleScriptObjC)
 		my runApplescript("tell application \"" & tarApp & "\" to activate")
 		return "App successfully launched"
 	else # activate app, if not activated
-		if displayedAppName is not equal to tarApp then tell application tarApp to activate
 		set tarAppPName to my getPName(tarApp)
-
-
-		# using AltTab
-		-- keystroke "`" using {command down}
-		-- delay 0.2
-		-- key code 123
-
-		# or swap windows (instead of adding one by one)  -  part1
-		-- set tarAppPName to my getPName(tarApp)
-		-- tell process tarAppPName
-		-- 	set winCount to count of windows # todo: minus windows not on desktop (Safari)
-		-- 	if winCount < 2 then return "Can't cycle " & winCount & " window(s)"
-		-- end tell
+		if displayedAppName is not equal to tarApp
+			tell application tarApp to activate
+			tell application process tarAppPName to set frontmost to true
+			return
+		end if
 	end if
 end tell
 
-# or swap windows (instead of adding one by one)  -  part 2
--- tell application tarApp
--- 	activate
-	-- set index of window 1 to winCount
--- end tell
--- tell application "System Events" to tell process tarAppPName
--- 	perform action "AXRaise" of window 1
--- end tell
-
-# or regular (click-shift-file-new (only bring forward first window))
-tell application tarApp to activate
-tell application "System Events" to tell process tarAppPName
-	perform action "AXRaise" of window 1
-end tell
-
+tell application "BetterTouchTool" to trigger_named "cycleWindowKeystroke"
 return {(tarApp & " successfully activated & activated a new window")}
 
 
