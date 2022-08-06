@@ -9,5 +9,5 @@ tell application "System Events"
 	key code 124 # right
 	delay 0.2
 	-- key code 49 # space
-	key code 55 # command
+	key code 36 # enter
 end tell
