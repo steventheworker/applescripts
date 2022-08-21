@@ -58,3 +58,5 @@ The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT c
     -   Cmd+H = find/replace on these apps
 -   Cmd+Shift+Q = quit on some apps (so I won't accidentally quit heavy apps)
     -   Cmd+Q will trigger Cmd+W (Safari/Xcode/few others)
+-   Multiple instances of VLC / Blender (line 1 (APP_PATH) in click-shift-file-new)
+-   Alt+Drag to move window around
