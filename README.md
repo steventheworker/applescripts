@@ -12,11 +12,11 @@ and finally, import the triggers (in "BTT Settings" folder) to BetterTouchTool i
 
 &nbsp;
 
-# Windows™️ window management: (requires [AltTab mod](https://github.com/steventheworker/alt-tab-macos/releases/download/v6.37.1/DockAltTab.AltTab.v6.37.1.zip))
+# Windows™ window management: (requires [AltTab mod](https://github.com/steventheworker/alt-tab-macos/releases/download/1.1/DockAltTab.AltTab.v6.46.1.zip))
 
-The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT cycling (just like on Windows™️).
+The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT cycling (just like on Windows™).
 
-"click-cmd-cycle-windows" & "click-shift-file-new" gives Windows™️ dock behavior where holding shift/cmd while clicking a dock icon creates a new window / cycles an apps windows.
+"click-cmd-cycle-windows" & "click-shift-file-new" gives Windows™ dock behavior where holding shift/cmd while clicking a dock icon creates a new window / cycles an apps windows.
 
 **Note**: if an apps tabs aren't closing (unimplemented), remap cmd+w/cmd+shift+w (for that specific app) on BTT to itself w/ "prevent recursive triggers" checked (for default behavior). And [report it!](https://github.com/steventheworker/applescripts/issues)
 
