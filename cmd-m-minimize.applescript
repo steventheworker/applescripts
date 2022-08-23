@@ -3,31 +3,22 @@ tell application "BetterTouchTool" to set tarAppID to get_string_variable "BTTAc
 set tarApp to name of application id tarAppID
 set tarAppPName to getPName(tarApp)
 
-set floatVal to false
-set floatVal2 to false
-# account for floating Notes windows
-if (tarApp is equal to "Notes")
-	tell application "System Events"
-		tell process tarAppPName
-			if (count of windows > 1)
-				set windowMenuItems to menu 1 of menu bar item "Window" of menu bar 1
-				if (exists menu item "Float on Top" of windowMenuItems)
-					set floatVal to not ((value of attribute "AXMenuItemMarkChar" of menu item "Float on Top" of windowMenuItems) is equal to missing value)
+set focusedWIndex to 1
+tell application "System Events"
+	tell process tarAppPName
+		try # get the active window (helps w/ Firefox (Picture-in-Picture)
+			set x to 1
+			repeat with w in windows
+				if focused of w is equal to true
+					set focusedWIndex to x
+					exit repeat
 				end if
-				if (floatVal is equal to false)
-							delay 0.75
-					perform action "AXRaise" of window 1
-					set windowMenuItems2 to menu 1 of menu bar item "Window" of menu bar 1
-					if (exists menu item "Float on Top" of windowMenuItems)
-						set floatVal2 to not ((value of attribute "AXMenuItemMarkChar" of menu item "Float on Top" of windowMenuItems2) is equal to missing value)
-					end if
-				else
-					return
-				end if
-			end if
-		end tell
+				set x to (x + 1)
+			end repeat
+		end try
 	end tell
-end if
+end tell
+
 
 # get new active app
 tell application "AltTab" to trigger
@@ -35,13 +26,15 @@ delay 0.05 # let app fully activate
 tell application "BetterTouchTool" to set nextAppID to get_string_variable "BTTActiveAppBundleIdentifier"
 set nextApp to name of application id nextAppID
 
-# minimize by app
+
+set wIndex to focusedWIndex # tarWin window index (floating/frontmost window)
+# minimize (by application)
 tell application tarApp
    try
       set winCount to (count of windows)
       if winCount is equal to 0 then return "0 windows"
-		set tarWin to window 1
-		if nextApp is equal to tarApp and winCount > 1 then set tarWin to window 2
+		if nextApp is equal to tarApp and winCount > 1 then set wIndex to wIndex + 1
+		set tarWin to window wIndex
 		set collapsed of tarWin to true
 		return {tarApp, nextApp, "application1"}
    end try
@@ -55,15 +48,44 @@ tell application tarApp
 	end try
 end tell
 
-# minimize by process
+# minimize (by process)
+set wIndex to focusedWIndex # reset  --in case it was incremented (by app)
+set newFocusedWIndex to 1
 tell application "System Events"
 	tell process tarAppPName
-      set winCount to (count of windows)
+		try # get new active window (helps w/ Firefox (Picture-in-Picture)
+			set x to 1
+			repeat with w in windows
+				if focused of w is equal to true
+					set newFocusedWIndex to x
+					exit repeat
+				end if
+				set x to (x + 1)
+			end repeat
+		end try
+
+      set winCount to (count of windows) - (count of (windows whose value of attribute "AXMinimized" is true)) - (count of (windows whose title is "Picture-in-Picture"))
       if winCount is equal to 0 then return "0 windows"
-		set tarWin to window 1
-		if (floatVal is equal to false and floatVal2 is equal to true) then set tarWin to window 2 # ignore notes floating window (assuming there's 1 floating max...)
-		if tarApp is equal to "KeyCastr" then set tarWin to window 2 # apps where window 1 === uncloseable overlay
-		if nextApp is equal to tarApp and winCount > 1 then set tarWin to window 2
+		if tarApp is equal to "KeyCastr" then set wIndex to wIndex + 1 # apps where window 1 === uncloseable overlay
+		
+		# get wIndex, handle floating windows
+		set isFloatingWindow to (focusedWIndex is equal to 1 and newFocusedWIndex > 1) or (focusedWIndex is equal to 1 and newFocusedWIndex is equal to 1 and nextApp is equal to tarApp and winCount > 1)
+		set floatingWinExists to isFloatingWindow or (focusedWIndex > 1 or newFocusedWIndex > 1)
+		if nextApp is equal to tarApp and winCount > 1
+			if floatingWinExists
+				if isFloatingWindow
+					set wIndex to newFocusedWIndex + 1
+				else
+					set wIndex to wIndex + 1
+				end if
+			else
+				set wIndex to 2
+				if (nextApp is equal to tarApp) then set wIndex to 1
+			end if
+		end if
+
+		# perform minimize
+		set tarWin to window wIndex
 		try
 			set value of attribute "AXMinimized" of tarWin to true
 			return {tarApp, nextApp, "process1"}
