@@ -3,6 +3,32 @@ tell application "BetterTouchTool" to set tarAppID to get_string_variable "BTTAc
 set tarApp to name of application id tarAppID
 set tarAppPName to getPName(tarApp)
 
+set floatVal to false
+set floatVal2 to false
+# account for floating Notes windows
+if (tarApp is equal to "Notes")
+	tell application "System Events"
+		tell process tarAppPName
+			if (count of windows > 1)
+				set windowMenuItems to menu 1 of menu bar item "Window" of menu bar 1
+				if (exists menu item "Float on Top" of windowMenuItems)
+					set floatVal to not ((value of attribute "AXMenuItemMarkChar" of menu item "Float on Top" of windowMenuItems) is equal to missing value)
+				end if
+				if (floatVal is equal to false)
+							delay 0.75
+					perform action "AXRaise" of window 1
+					set windowMenuItems2 to menu 1 of menu bar item "Window" of menu bar 1
+					if (exists menu item "Float on Top" of windowMenuItems)
+						set floatVal2 to not ((value of attribute "AXMenuItemMarkChar" of menu item "Float on Top" of windowMenuItems2) is equal to missing value)
+					end if
+				else
+					return
+				end if
+			end if
+		end tell
+	end tell
+end if
+
 # get new active app
 tell application "AltTab" to trigger
 delay 0.05 # let app fully activate
@@ -20,11 +46,11 @@ tell application tarApp
 		return {tarApp, nextApp, "application1"}
    end try
 	try
-		if tarApp is equal to "Emacs"
-			tell application "Emacs" to set miniaturized of tarWin to true
-		else
+		-- if tarApp is equal to "Emacs"
+		-- 	tell application "Emacs" to set miniaturized of tarWin to true
+		-- else
 			set miniaturized of tarWin to true
-		end if
+		-- end if
 		return {tarApp, nextApp, "application2"}
 	end try
 end tell
@@ -35,6 +61,7 @@ tell application "System Events"
       set winCount to (count of windows)
       if winCount is equal to 0 then return "0 windows"
 		set tarWin to window 1
+		if (floatVal is equal to false and floatVal2 is equal to true) then set tarWin to window 2 # ignore notes floating window (assuming there's 1 floating max...)
 		if tarApp is equal to "KeyCastr" then set tarWin to window 2 # apps where window 1 === uncloseable overlay
 		if nextApp is equal to tarApp and winCount > 1 then set tarWin to window 2
 		try

@@ -6,14 +6,13 @@ global tarAppPName
 global tarAppID
 global winCount
 
-set tarAppID to ""
-tell application "iTerm" # make work with iTerm hotkey window
-	if (count of windows > 0) and ((not (current window is equal to missing value) and ((current window) is is hotkey window)) or (window 1 is is hotkey window))
-		set tarAppID to "com.googlecode.iterm2"
+tell application "BetterTouchTool"
+	set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
+	if (tarAppID is equal to "org.mozilla.firefox")
+		set ffCloseOrder to get_string_variable "ffCloseOrder"
+		set_string_variable "ffCloseOrder" to (ffCloseOrder & "w") # add close window
 	end if
 end tell
-if tarAppID is equal to "" then tell application "BetterTouchTool" to set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
-
 set tarApp to name of application id tarAppID
 set tarAppPName to getPName(tarApp)
 set winTitle to ""
@@ -23,11 +22,11 @@ if not (tarAppPName is equal to "Premiere Pro" or tarApp is equal to "Emacs") # 
 		tell process tarAppPName
 			# close weird window (by process) that dissapear on switch (eg: "Colors" ((cmd+shift+c) in many apps like Stickies/Script Editor)) & for dialog windows & AXFullScreen windows
 			set isFullScreen to value of attribute "AXFullScreen" of window 1
-			set wid to (attributes of window 1) whose (name is equal to "AXIdentifier")
-			if count of wid > 0 then set wid to value of attribute "AXIdentifier" of window 1
+			set wIdentifier to (attributes of window 1) whose (name is equal to "AXIdentifier")
+			if count of wIdentifier > 0 then set wIdentifier to value of attribute "AXIdentifier" of window 1
 			set sub to subrole of window 1 # window subrole
 			set floats to (sub is equal to "AXSystemFloatingWindow" or sub is equal to "AXFloatingWindow")
-			if wid is equal to "open-panel" or isFullScreen or floats or sub is equal to "AXDialog" or sub is equal to "Quick Look"
+			if wIdentifier is equal to "open-panel" or isFullScreen or floats or sub is equal to "AXDialog" or sub is equal to "Quick Look"
 				set winCount to (count of windows)
 				tell application "BetterTouchTool" to trigger_named "commandW"
 				if winCount is equal to (count of windows) then click ((window 1)'s buttons whose subrole is "AXCloseButton")

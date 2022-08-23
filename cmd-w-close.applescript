@@ -1,24 +1,24 @@
 -- delay 2
 set RECLAIMFOCUS_PATH to "~/Desktop/important/SystemFiles"
-# if tab app / document app - only close tabs (via trigger "commandW" (not windows)) (apps SHOULD handle closing windows @ last/single tab)         # handled tab apps: Xcode, Visual Studio Code, Terminal, Chrome, Firefox, Safari, PyCharm, Maps, iTerm2, Finder, Adobe Photoshop & Illustrator & 
+# if tab app / document app - only close tabs (via trigger "commandW" (not windows)) (apps SHOULD handle closing windows @ last/single tab)         # implemented tab apps: Xcode, Visual Studio Code, Terminal, Chrome, Firefox, Safari, PyCharm, Maps, iTerm2, Finder, Adobe Photoshop & Illustrator & 
 # get active app
 global tarApp
 global tarAppPName
 global tarAppID
 global winCount
+global wID
 
-set tarAppID to ""
-tell application "iTerm" # make work with iTerm hotkey window
-	if (count of windows > 0) and ((not (current window is equal to missing value) and ((current window) is is hotkey window)) or (window 1 is is hotkey window))
-		set tarAppID to "com.googlecode.iterm2"
-	end if
+tell application "BetterTouchTool"
+   set iTermOverlay to get_number_variable "iTermOverlay"
+	set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
 end tell
-if tarAppID is equal to "" then tell application "BetterTouchTool" to set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
 
 set tarApp to name of application id tarAppID
 set tarAppPName to getPName(tarApp)
 set closeTab to false
 set winTitle to ""
+
+if (tarApp is equal to "Firefox") then tell application "Firefox" to set wID to id of window 1
 
 if not (tarApp is equal to "Emacs") # apps that don't work by process (AT ALL)
 	tell application "System Events"
@@ -27,11 +27,11 @@ if not (tarApp is equal to "Emacs") # apps that don't work by process (AT ALL)
 			set winTitle to title of window 1 # check if tab closed by title change (reclaimFocus)
 			# check if weird window that dissapears on switch (eg: "Colors" ((cmd+shift+c) in many apps like Stickies/Script Editor)) & for dialog windows & AXFullScreen windows
 			set isFullScreen to value of attribute "AXFullScreen" of window 1
-			set wid to (attributes of window 1) whose (name is equal to "AXIdentifier")
-			if count of wid > 0 then set wid to value of attribute "AXIdentifier" of window 1
+			set wIdentifier to (attributes of window 1) whose (name is equal to "AXIdentifier")
+			if count of wIdentifier > 0 then set wIdentifier to value of attribute "AXIdentifier" of window 1
 			set sub to subrole of window 1 # window subrole
 			set floats to (sub is equal to "AXSystemFloatingWindow" or sub is equal to "AXFloatingWindow")
-			if wid is equal to "open-panel" or isFullScreen or floats or sub is equal to "AXDialog" or sub is equal to "Quick Look"
+			if wIdentifier is equal to "open-panel" or isFullScreen or floats or sub is equal to "AXDialog" or sub is equal to "Quick Look"
 				tell application "BetterTouchTool" to trigger_named "commandW"
 				if winCount is equal to (count of windows) then click ((window 1)'s buttons whose subrole is "AXCloseButton")
 				return my quitAt0({tarApp, "'nextApp'", "floating window closed (with cycling)"})
@@ -86,7 +86,7 @@ if tarApp is equal to "iTerm"
 end if
 
 # fallback to always trigger commandW (in tab apps / reclaimFocus is true)
-set reclaimFocus to false	# unscriptable & un-GUI scriptable apps (eg: electron based apps, Firefox, etc.) === Fallback to commandW + reclaimFocus   </3
+set reclaimFocus to false	# true means unscriptable & un-GUI scriptable apps (eg: electron based apps, Firefox, etc.) === Fallback to commandW + reclaimFocus   </3
 # if line order: impossibleApps, ChatApps, API build Apps, MailApps (since comments on "Â" lines breaks builds)
 if (tarApp is equal to "Firefox" or tarAppPName is equal to "Adobe Illustrator" or tarApp is equal to "Termius" or tarApp is equal to "Sublime Text"Â
 	or tarApp is equal to "Slack"Â
@@ -272,6 +272,17 @@ on quitAt0(_a)
 					end if
 				end if
 			end tell
+
+			if (tarApp is equal to "Firefox")
+				tell application "Firefox" to set wID2 to id of window 1
+				tell application "BetterTouchTool"
+						set tabOrWindow to "t"
+						if (not (wID is equal to wID2)) then set tabOrWindow to "w"
+						set ffCloseOrder to get_string_variable "ffCloseOrder"
+						set_string_variable "ffCloseOrder" to (ffCloseOrder & tabOrWindow) # add close tab / window
+				end tell
+			end if
+
 			if didLastWindowClose and tarApp is equal to "Notes" # notes doesn't close all processes on quit (close the one that prevents dockClickHideToggle (dock exposŽ))
 				delay 3
 				tell process "com.apple.Notes.WidgetExtension" to do shell script "kill -9 " & (unix id)
