@@ -20,6 +20,7 @@ set winTitle to ""
 if not (tarAppPName is equal to "Premiere Pro" or tarApp is equal to "Emacs") # all Premiere Pro components are floating (ignore; we want to close the full window in this script)
 	tell application "System Events"
 		tell process tarAppPName
+			set processWinCount to count of windows # count by process = windows on space, count by app = windows from all spaces
 			# close weird window (by process) that dissapear on switch (eg: "Colors" ((cmd+shift+c) in many apps like Stickies/Script Editor)) & for dialog windows & AXFullScreen windows
 			set isFullScreen to value of attribute "AXFullScreen" of window 1
 			set wIdentifier to (attributes of window 1) whose (name is equal to "AXIdentifier")
@@ -95,11 +96,14 @@ tell application tarApp
 	end try
 	if nameTitle is equal to winTitle or (winTitle is equal to "" and not (nameTitle is equal to "")) # or (couldn't get winTitle / winTitle wasn't set)
 		try
-			close tarWin
-			if (tarApp is equal to "iTerm" and winCount is equal to 1) # iTerm is weird (leaves no app activated after close)
+			if (tarApp is equal to "iTerm" and processWinCount is equal to 1) # iTerm is weird (leaves no app activated after close)
+				tell application "iTerm" to set isHKWin to is hotkey window of tarWin
+				close tarWin
 				delay 0.0625
-				tell application "AltTab" to trigger
+				if (not(isHKWin)) then tell application "AltTab" to trigger
+				return "iTerm2 close"
 			end if
+			close tarWin
 			return my quitAt0({tarApp, nextApp, "application"})
 		end try
 	end if

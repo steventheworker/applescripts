@@ -9,7 +9,6 @@ global winCount
 global wID
 
 tell application "BetterTouchTool"
-   set iTermOverlay to get_number_variable "iTermOverlay"
 	set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
 end tell
 
@@ -23,6 +22,7 @@ if (tarApp is equal to "Firefox") then tell application "Firefox" to set wID to 
 if not (tarApp is equal to "Emacs") # apps that don't work by process (AT ALL)
 	tell application "System Events"
 		tell process tarAppPName	# check tabs apps (by process)
+			set processWinCount to count of windows # count by process = windows on space, count by app = windows from all spaces
 			set winCount to (count of windows)
 			set winTitle to title of window 1 # check if tab closed by title change (reclaimFocus)
 			# check if weird window that dissapears on switch (eg: "Colors" ((cmd+shift+c) in many apps like Stickies/Script Editor)) & for dialog windows & AXFullScreen windows
@@ -139,11 +139,14 @@ tell application tarApp
 	end try
 	if nameTitle is equal to winTitle or (winTitle is equal to "" and not (nameTitle is equal to "")) # or (couldn't get winTitle / winTitle wasn't set)
 		try
-			close tarWin
-			if (tarApp is equal to "iTerm" and winCount is equal to 1) # iTerm is weird (leaves no app activated after close)
+			if (tarApp is equal to "iTerm" and processWinCount is equal to 1) # iTerm is weird (leaves no app activated after close)				
+				tell application "iTerm" to set isHKWin to is hotkey window of tarWin
+				close tarWin
 				delay 0.0625
-				tell application "AltTab" to trigger
+				if (not(isHKWin)) then tell application "AltTab" to trigger
+				return "iTerm2 close"
 			end if
+			close tarWin
 			return my quitAt0({tarApp, nextApp, "application"})
 		end try
 	end if
