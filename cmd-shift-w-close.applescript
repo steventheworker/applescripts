@@ -34,6 +34,7 @@ if not (tarAppPName is equal to "Premiere Pro" or tarApp is equal to "Emacs") # 
 				return my quitAt0({tarApp, "'nextApp'", "floating window closed (with cycling)"})
 			end if
 			set tarWin to window 1
+			set OGWindow to tarWin
 		end tell
 	end tell
 end if
@@ -81,42 +82,15 @@ if (tarApp is equal to "Pages" or tarApp is equal to "Numbers" or tarApp is equa
 end if
 
 
-# close by app
-tell application tarApp
-	set nameTitle to "" # make sure winTitle of window we're supposed to be closing is the same (apps sometimes return only include tab windows here, when telling by app (eg: Inspector windows in Safari))
-	try
-      set winCount to (count of windows)
-      if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
-		set tarWin to window 1
-		if nextApp is equal to tarApp and winCount > 1 then set tarWin to window 2
-		set nameTitle to title of tarWin
-	end try
-	try
-		if nameTitle is equal to "" then set nameTitle to name of tarWin
-	end try
-	if nameTitle is equal to winTitle or (winTitle is equal to "" and not (nameTitle is equal to "")) # or (couldn't get winTitle / winTitle wasn't set)
-		try
-			if (tarApp is equal to "iTerm" and processWinCount is equal to 1) # iTerm is weird (leaves no app activated after close)
-				tell application "iTerm" to set isHKWin to is hotkey window of tarWin
-				close tarWin
-				delay 0.0625
-				if (not(isHKWin)) then tell application "AltTab" to trigger
-				return "iTerm2 close"
-			end if
-			close tarWin
-			return my quitAt0({tarApp, nextApp, "application"})
-		end try
-	end if
-end tell
-
 # close by process
 tell application "System Events"
 	tell process tarAppPName
       set winCount to (count of windows)
 		if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
 		set tarWin to window 1
+		set isOGWindow to OGWindow is equal to tarWin
+		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window 2
 		if tarApp is equal to "KeyCastr" then set tarWin to window 2 # apps where window 1 === uncloseable overlay
-		if nextApp is equal to tarApp and winCount > 1 then set tarWin to window 2
 		try
 			close tarWin
 			return my quitAt0({tarApp, nextApp, "process1"})
@@ -138,6 +112,33 @@ tell application "System Events"
 end tell
 
 
+# close by app
+tell application tarApp
+	set nameTitle to "" # make sure winTitle of window we're supposed to be closing is the same (apps sometimes return only include tab windows here, when telling by app (eg: Inspector windows in Safari))
+	try
+      set winCount to (count of windows)
+      if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
+		set tarWin to window 1
+		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window 2
+		set nameTitle to title of tarWin
+	end try
+	try
+		if nameTitle is equal to "" then set nameTitle to name of tarWin
+	end try
+	if nameTitle is equal to winTitle or (winTitle is equal to "" and not (nameTitle is equal to "")) # or (couldn't get winTitle / winTitle wasn't set)
+		try
+			if (tarApp is equal to "iTerm" and processWinCount is equal to 1) # iTerm is weird (leaves no app activated after close)
+				tell application "iTerm" to set isHKWin to is hotkey window of tarWin
+				close tarWin
+				delay 0.0625
+				if (not(isHKWin)) then tell application "AltTab" to trigger
+				return "iTerm2 close"
+			end if
+			close tarWin
+			return my quitAt0({tarApp, nextApp, "application"})
+		end try
+	end if
+end tell
 
 
 

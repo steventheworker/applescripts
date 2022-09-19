@@ -71,6 +71,7 @@ if not (tarApp is equal to "Emacs") # apps that don't work by process (AT ALL)
 				if exists tab group 1 of window 1 then set tabCount to ((count of UI elements of tab group 1 of window 1) - 1) # minus the "+" button (add tab button)
 				if tabCount > 1 then set closeTab to true
 			end if
+			set OGWindow to window 1
 		end tell
 	end tell
 end if
@@ -123,6 +124,23 @@ delay 0.05 # let app fully activate
 tell application "BetterTouchTool" to set nextAppID to get_string_variable "BTTActiveAppBundleIdentifier"
 set nextApp to name of application id nextAppID
 
+# close by process
+tell application "System Events"
+	tell process tarAppPName
+      set winCount to (count of windows)
+      if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
+		set tarWin to window 1
+		set isOGWindow to OGWindow is equal to tarWin
+		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window 2
+		if tarApp is equal to "KeyCastr" then set tarWin to window 2 # apps where window 1 === uncloseable overlay
+		try
+			close tarWin
+			return my quitAt0({tarApp, nextApp, "process1"})
+		end try
+      click (tarWin's buttons whose subrole is "AXCloseButton")
+		return my quitAt0({tarApp, nextApp, "process2"})
+	end tell
+end tell
 
 # close by app
 tell application tarApp
@@ -131,7 +149,7 @@ tell application tarApp
       set winCount to (count of windows)
       if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
 		set tarWin to window 1
-		if nextApp is equal to tarApp and winCount > 1 then set tarWin to window 2
+		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window 2
 		set nameTitle to title of tarWin
 	end try
 	try
@@ -151,27 +169,6 @@ tell application tarApp
 		end try
 	end if
 end tell
-
-# close by process
-tell application "System Events"
-	tell process tarAppPName
-      set winCount to (count of windows)
-      if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
-		set tarWin to window 1
-		if tarApp is equal to "KeyCastr" then set tarWin to window 2 # apps where window 1 === uncloseable overlay
-		if nextApp is equal to tarApp and winCount > 1 then set tarWin to window 2
-		try
-			close tarWin
-			return my quitAt0({tarApp, nextApp, "process1"})
-		end try
-      click (tarWin's buttons whose subrole is "AXCloseButton")
-		return my quitAt0({tarApp, nextApp, "process2"})
-	end tell
-end tell
-
-
-
-
 
 
 
