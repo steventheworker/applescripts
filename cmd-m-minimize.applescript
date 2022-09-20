@@ -9,13 +9,14 @@ tell application "System Events"
 		try # get the active window (helps w/ Firefox (Picture-in-Picture)
 			set x to 1
 			repeat with w in windows
-				if focused of w is equal to true
+				if value of attribute "AXMain" of w is equal to true -- if focused of w is equal to true
 					set focusedWIndex to x
 					exit repeat
 				end if
 				set x to (x + 1)
 			end repeat
 		end try
+		set OGWindow to window focusedWIndex
 	end tell
 end tell
 
@@ -27,27 +28,6 @@ tell application "BetterTouchTool" to set nextAppID to get_string_variable "BTTA
 set nextApp to name of application id nextAppID
 
 
-set wIndex to focusedWIndex # tarWin window index (floating/frontmost window)
-# minimize (by application)
-tell application tarApp
-   try
-      set winCount to (count of windows)
-      if winCount is equal to 0 then return "0 windows"
-		if nextApp is equal to tarApp and winCount > 1 then set wIndex to wIndex + 1
-		set tarWin to window wIndex
-		set collapsed of tarWin to true
-		return {tarApp, nextApp, "application1"}
-   end try
-	try
-		-- if tarApp is equal to "Emacs"
-		-- 	tell application "Emacs" to set miniaturized of tarWin to true
-		-- else
-			set miniaturized of tarWin to true
-		-- end if
-		return {tarApp, nextApp, "application2"}
-	end try
-end tell
-
 # minimize (by process)
 set wIndex to focusedWIndex # reset  --in case it was incremented (by app)
 set newFocusedWIndex to 1
@@ -56,7 +36,7 @@ tell application "System Events"
 		try # get new active window (helps w/ Firefox (Picture-in-Picture)
 			set x to 1
 			repeat with w in windows
-				if focused of w is equal to true
+				if value of attribute "AXMain" of w is equal to true -- if focused of w is equal to true
 					set newFocusedWIndex to x
 					exit repeat
 				end if
@@ -71,7 +51,8 @@ tell application "System Events"
 		# get wIndex, handle floating windows
 		set isFloatingWindow to (focusedWIndex is equal to 1 and newFocusedWIndex > 1) or (focusedWIndex is equal to 1 and newFocusedWIndex is equal to 1 and nextApp is equal to tarApp and winCount > 1)
 		set floatingWinExists to isFloatingWindow or (focusedWIndex > 1 or newFocusedWIndex > 1)
-		if nextApp is equal to tarApp and winCount > 1
+		set isOGWindow to OGWindow is equal to window 1
+		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow)
 			if floatingWinExists
 				if isFloatingWindow
 					set wIndex to newFocusedWIndex + 1
@@ -95,6 +76,27 @@ tell application "System Events"
 	end tell
 end tell
 
+
+# minimize (by application)
+set wIndex to focusedWIndex # tarWin window index (floating/frontmost window)
+tell application tarApp
+   try
+      set winCount to (count of windows)
+      if winCount is equal to 0 then return "0 windows"
+		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set wIndex to wIndex + 1
+		set tarWin to window wIndex
+		set collapsed of tarWin to true
+		return {tarApp, nextApp, "application1"}
+   end try
+	try
+		-- if tarApp is equal to "Emacs"
+		-- 	tell application "Emacs" to set miniaturized of tarWin to true
+		-- else
+			set miniaturized of tarWin to true
+		-- end if
+		return {tarApp, nextApp, "application2"}
+	end try
+end tell
 
 
 
