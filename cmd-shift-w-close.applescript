@@ -16,25 +16,37 @@ end tell
 set tarApp to name of application id tarAppID
 set tarAppPName to getPName(tarApp)
 set winTitle to ""
+set focusedWIndex to 1
 
 if not (tarAppPName is equal to "Premiere Pro" or tarApp is equal to "Emacs") # all Premiere Pro components are floating (ignore; we want to close the full window in this script)
 	tell application "System Events"
 		tell process tarAppPName
+			try # get the active window (helps w/ Firefox (Picture-in-Picture) / Floating)
+				set x to 1
+				repeat with w in windows
+					if value of attribute "AXMain" of w is equal to true -- if focused of w is equal to true
+						set focusedWIndex to x
+						exit repeat
+					end if
+					set x to (x + 1)
+				end repeat
+			end try
+			set OGWindow to window focusedWIndex
+			set tarWin to OGWindow
+
 			set processWinCount to count of windows # count by process = windows on space, count by app = windows from all spaces
 			# close weird window (by process) that dissapear on switch (eg: "Colors" ((cmd+shift+c) in many apps like Stickies/Script Editor)) & for dialog windows & AXFullScreen windows
-			set isFullScreen to value of attribute "AXFullScreen" of window 1
-			set wIdentifier to (attributes of window 1) whose (name is equal to "AXIdentifier")
-			if count of wIdentifier > 0 then set wIdentifier to value of attribute "AXIdentifier" of window 1
-			set sub to subrole of window 1 # window subrole
+			set isFullScreen to value of attribute "AXFullScreen" of tarWin
+			set wIdentifier to (attributes of tarWin) whose (name is equal to "AXIdentifier")
+			if count of wIdentifier > 0 then set wIdentifier to value of attribute "AXIdentifier" of tarWin
+			set sub to subrole of tarWin # window subrole
 			set floats to (sub is equal to "AXSystemFloatingWindow" or sub is equal to "AXFloatingWindow")
 			if wIdentifier is equal to "open-panel" or isFullScreen or floats or sub is equal to "AXDialog" or sub is equal to "Quick Look"
 				set winCount to (count of windows)
 				tell application "BetterTouchTool" to trigger_named "commandW"
-				if winCount is equal to (count of windows) then click ((window 1)'s buttons whose subrole is "AXCloseButton")
+				if winCount is equal to (count of windows) then click ((tarWin)'s buttons whose subrole is "AXCloseButton")
 				return my quitAt0({tarApp, "'nextApp'", "floating window closed (with cycling)"})
 			end if
-			set tarWin to window 1
-			set OGWindow to tarWin
 		end tell
 	end tell
 end if
@@ -87,9 +99,8 @@ tell application "System Events"
 	tell process tarAppPName
       set winCount to (count of windows)
 		if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
-		set tarWin to window 1
-		set isOGWindow to OGWindow is equal to tarWin
-		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window 2
+		set isOGWindow to OGWindow is equal to window 1
+		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window (focusedWIndex + 1)
 		if tarApp is equal to "KeyCastr" then set tarWin to window 2 # apps where window 1 === uncloseable overlay
 		try
 			close tarWin
