@@ -7,6 +7,7 @@ global tarAppPName
 global tarAppID
 global winCount
 global wID
+global focusedWIndex
 
 tell application "BetterTouchTool"
 	set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
@@ -16,30 +17,42 @@ set tarApp to name of application id tarAppID
 set tarAppPName to getPName(tarApp)
 set closeTab to false
 set winTitle to ""
-
-if (tarApp is equal to "Firefox") then tell application "Firefox" to set wID to id of window 1
+set focusedWIndex to 1
 
 if not (tarApp is equal to "Emacs") # apps that don't work by process (AT ALL)
 	tell application "System Events"
 		tell process tarAppPName	# check tabs apps (by process)
+			try # get the active window (helps w/ Firefox (Picture-in-Picture) / Floating)
+				set x to 1
+				repeat with w in windows
+					if value of attribute "AXMain" of w is equal to true -- if focused of w is equal to true
+						set focusedWIndex to x
+						exit repeat
+					end if
+					set x to (x + 1)
+				end repeat
+			end try
+			set OGWindow to window focusedWIndex
+			set tarWin to OGWindow
+
 			set processWinCount to count of windows # count by process = windows on space, count by app = windows from all spaces
 			set winCount to (count of windows)
-			set winTitle to title of window 1 # check if tab closed by title change (reclaimFocus)
+			set winTitle to title of tarWin # check if tab closed by title change (reclaimFocus)
 			# check if weird window that dissapears on switch (eg: "Colors" ((cmd+shift+c) in many apps like Stickies/Script Editor)) & for dialog windows & AXFullScreen windows
-			set isFullScreen to value of attribute "AXFullScreen" of window 1
-			set wIdentifier to (attributes of window 1) whose (name is equal to "AXIdentifier")
-			if count of wIdentifier > 0 then set wIdentifier to value of attribute "AXIdentifier" of window 1
-			set sub to subrole of window 1 # window subrole
+			set isFullScreen to value of attribute "AXFullScreen" of tarWin
+			set wIdentifier to (attributes of tarWin) whose (name is equal to "AXIdentifier")
+			if count of wIdentifier > 0 then set wIdentifier to value of attribute "AXIdentifier" of tarWin
+			set sub to subrole of tarWin # window subrole
 			set floats to (sub is equal to "AXSystemFloatingWindow" or sub is equal to "AXFloatingWindow")
 			if wIdentifier is equal to "open-panel" or isFullScreen or floats or sub is equal to "AXDialog" or sub is equal to "Quick Look"
 				tell application "BetterTouchTool" to trigger_named "commandW"
-				if winCount is equal to (count of windows) then click ((window 1)'s buttons whose subrole is "AXCloseButton")
+				if winCount is equal to (count of windows) then click ((tarWin)'s buttons whose subrole is "AXCloseButton")
 				return my quitAt0({tarApp, "'nextApp'", "floating window closed (with cycling)"})
 			end if
 
 			# tab apps - tab exists? by process
 			if tarApp is equal to "Xcode"
-				tell group 2 of splitter group 1 of splitter group 1 of group 2 of splitter group 1 of window 1
+				tell group 2 of splitter group 1 of splitter group 1 of group 2 of splitter group 1 of tarWin
 					set tabCount to 0
 					if exists tab group 1 then set tabCount to count of radio buttons of tab group 1
 					if tabCount > 0 then set closeTab to true
@@ -47,12 +60,11 @@ if not (tarApp is equal to "Emacs") # apps that don't work by process (AT ALL)
 			end if
 			# test title of window 1 (look for " Ñ " OR " Ð "  (YES, THEY'RE DIFFERENT))
 			if tarApp is equal to "Visual Studio Code" or tarAppPName is equal to "PyCharm"
-				set windowTitle to title of window 1
 				set lastTabPipe to -1 # testing title for " Ñ " (meaning there is a tab open)
 				set lastSpace to -1
 				set i to 0
-				repeat with curLetter in characters of windowTitle
-					set l to item (i + 1) of characters of windowTitle
+				repeat with curLetter in characters of winTitle
+					set l to item (i + 1) of characters of winTitle
 					if lastSpace is equal to i - 1 and (l is equal to "Ñ" or l is equal to "Ð") then set lastTabPipe to i
 					if l is equal to "Ê" then
 						set lastSpace to i
@@ -63,26 +75,27 @@ if not (tarApp is equal to "Emacs") # apps that don't work by process (AT ALL)
 					end if
 					set i to (i + 1)
 				end repeat
-				if windowTitle is equal to "Get Started" then set closeTab to true # VSCode
+				if winTitle is equal to "Get Started" then set closeTab to true # VSCode
 			end if
-			if tarApp is equal to "Maps" then if exists tab group 1 of window 1 then set closeTab to true # 1 tab left when element DNE (special cmd-w (on BTT))
+			if tarApp is equal to "Maps" then if exists tab group 1 of tarWin then set closeTab to true # 1 tab left when element DNE (special cmd-w (on BTT))
 			if tarApp is equal to "Maps" or tarApp is equal to "Mail" or tarApp is equal to "Terminal" or tarApp is equal to "Finder" or tarApp is equal to "TextEdit" or tarApp is equal to "Script Editor"
 				set tabCount to 1 # these app windows can't have less than 1 tabs
-				if exists tab group 1 of window 1 then set tabCount to ((count of UI elements of tab group 1 of window 1) - 1) # minus the "+" button (add tab button)
+				if exists tab group 1 of tarWin then set tabCount to ((count of UI elements of tab group 1 of tarWin) - 1) # minus the "+" button (add tab button)
 				if tabCount > 1 then set closeTab to true
 			end if
-			set OGWindow to window 1
 		end tell
 	end tell
 end if
 
+if (tarApp is equal to "Firefox") then tell application "Firefox" to set wID to id of window focusedWIndex
+
 # tab apps - tab exists? by app
-if tarApp is equal to "Google Chrome" then tell application "Google Chrome" to if count of (tabs of window 1) > 1 then set closeTab to true
-if tarApp is equal to "Chromium" then tell application "Chromium" to if count of (tabs of window 1) > 1 then set closeTab to true
-if tarApp is equal to "Safari" then tell application "Safari" to if count of (tabs of window 1) > 1 then set closeTab to true
+if tarApp is equal to "Google Chrome" then tell application "Google Chrome" to if count of (tabs of window focusedWIndex) > 1 then set closeTab to true
+if tarApp is equal to "Chromium" then tell application "Chromium" to if count of (tabs of window focusedWIndex) > 1 then set closeTab to true
+if tarApp is equal to "Safari" then tell application "Safari" to if count of (tabs of window focusedWIndex) > 1 then set closeTab to true
 if tarApp is equal to "iTerm"
 	tell application "iTerm2"
-		if count of (tabs of window 1) > 1 or count of (sessions of current tab of window 1) > 1 then set closeTab to true
+		if count of (tabs of window focusedWIndex) > 1 or count of (sessions of current tab of window focusedWIndex) > 1 then set closeTab to true
 	end tell
 end if
 
@@ -129,9 +142,8 @@ tell application "System Events"
 	tell process tarAppPName
       set winCount to (count of windows)
       if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
-		set tarWin to window 1
-		set isOGWindow to OGWindow is equal to tarWin
-		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window 2
+		set isOGWindow to OGWindow is equal to window 1
+		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window (focusedWIndex + 1)
 		if tarApp is equal to "KeyCastr" then set tarWin to window 2 # apps where window 1 === uncloseable overlay
 		try
 			close tarWin
@@ -148,8 +160,8 @@ tell application tarApp
 	try
       set winCount to (count of windows)
       if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
-		set tarWin to window 1
-		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window 2
+		set tarWin to window focusedWIndex
+		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window (focusedWIndex + 1)
 		set nameTitle to title of tarWin
 	end try
 	try
@@ -207,7 +219,7 @@ on closeAdobeWindowTab(tarApp)
 	tell application tarApp to set documentCount to (count of documents)
 	tell application "System Events"
 		tell process tarAppPName
-			if (title of window 1 is equal to tarApp)
+			if (title of window focusedWIndex is equal to tarApp)
 				set visible to false
 				return my quitAt0({tarApp, "'nextApp'", "hid adobe home 1"})
 			end if
@@ -232,7 +244,7 @@ on closeAdobeWindowTab(tarApp)
 	tell application "System Events"
 		tell process tarAppPName
 			if (count of windows) is equal to winCount
-				if (title of window 1 is equal to tarApp)
+				if (title of window focusedWIndex is equal to tarApp)
 					set visible to false
 					return my quitAt0({tarApp, nextApp, "hid adobe home 2"})
 				end if
@@ -274,7 +286,7 @@ on quitAt0(_a)
 			end tell
 
 			if (tarApp is equal to "Firefox")
-				tell application "Firefox" to set wID2 to id of window 1
+				tell application "Firefox" to set wID2 to id of window focusedWIndex
 				tell application "BetterTouchTool"
 						set tabOrWindow to "t"
 						if (not (wID is equal to wID2)) then set tabOrWindow to "w"

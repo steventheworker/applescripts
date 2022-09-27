@@ -129,8 +129,8 @@ tell application tarApp
 	try
       set winCount to (count of windows)
       if winCount is equal to 0 then return my quitAt0({tarApp, nextApp, "0 windows"})
-		set tarWin to window 1
-		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window 2
+		set tarWin to window focusedWIndex
+		if nextApp is equal to tarApp and winCount > 1 and not(isOGWindow) then set tarWin to window (focusedWIndex + 1)
 		set nameTitle to title of tarWin
 	end try
 	try
