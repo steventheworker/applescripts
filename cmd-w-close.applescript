@@ -54,7 +54,11 @@ if not (tarApp is equal to "Emacs") # apps that don't work by process (AT ALL)
 			if tarApp is equal to "Xcode"
 				tell group 2 of splitter group 1 of splitter group 1 of group 2 of splitter group 1 of tarWin
 					set tabCount to 0
-					if exists tab group 1 then set tabCount to count of radio buttons of tab group 1
+					if exists tab group 1 then
+						set tabsContainer to tab group 1
+						if (exists (scroll area 1 of tabsContainer)) and ((count of UI elements of tabsContainer) is equal to 1) then set tabsContainer to scroll area 1 of tabsContainer # element introduced @ Version 14.0 (14A309)
+						set tabCount to count of radio buttons of tabsContainer
+					end if
 					if tabCount > 0 then set closeTab to true
 				end tell
 			end if
