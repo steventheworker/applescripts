@@ -141,7 +141,9 @@ end tell
 
 tell application tarApp to activate
 tell application "System Events" to tell process tarAppPName
-	perform action "AXRaise" of window 1
+	set tarWin to window 1
+	if (tarApp is equal to "Firefox") then set tarWin to item 1 of (windows whose not(title is "Picture-in-Picture"))
+	perform action "AXRaise" of tarWin
 end tell
 
 
