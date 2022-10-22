@@ -1,5 +1,4 @@
 -- delay 2
-set RECLAIMFOCUS_PATH to "~/Desktop/important/SystemFiles"
 # if tab app / document app - only close tabs (via trigger "commandW" (not windows)) (apps SHOULD handle closing windows @ last/single tab)         # implemented tab apps: Xcode, Visual Studio Code, Terminal, Chrome, Firefox, Safari, PyCharm, Maps, iTerm2, Finder, Adobe Photoshop & Illustrator & 
 # get active app
 global tarApp
@@ -11,6 +10,7 @@ global focusedWIndex
 
 tell application "BetterTouchTool"
 	set tarAppID to get_string_variable "BTTActiveAppBundleIdentifier"
+	set RECLAIMFOCUS_PATH to get_string_variable "steviaOSSystemFiles"
 end tell
 
 set tarApp to name of application id tarAppID

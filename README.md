@@ -4,7 +4,7 @@ After cloning, in the "BTT Settings" folder, open "triggers.bttpreset", then rep
 
 &nbsp; &nbsp; &nbsp;"\\/Users\\/super\\/Desktop\\/important\\/SystemFiles\\/" &nbsp; --with the path you've placed the applescripts (and don't forget to add backslashes back in!)
 
-Change line 1 of "cmd-w-close.applescript" to that same path (minus the blackslashes)
+Change APPLESCRIPTS_FOLDER in "afterBTTLaunched.applescript" to that same path (minus the blackslashes)
 
 Compile all .applescript to .scpt by running &nbsp; `bash ./compile-all.sh`
 
