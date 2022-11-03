@@ -50,18 +50,13 @@ tell application "System Events"
          repeat with m in monitors # ??? dockOnMonitorUnderCursor
             set xy to item 1 of m
             set wh to item 2 of m
-            log (dockX  &  "," & dockY)
             set offsetY to (H - item 2 of wh)
             if (X >= item 1 of xy and X <= item 1 of xy + item 1 of wh)   and   (Y >= -(item 2 of xy) and Y <= item 2 of wh + offsetY) # mouse on this monitor
-               log wh & " mouse on monitor " & X & Y & " "& xy
-            else
-               log wh & " !mouse on monitor " & X & Y & " "& xy
+               if (dockX >= item 1 of xy and dockX <= item 1 of xy + item 1 of wh and dockY >= item 2 of xy and dockY <= item 2 of xy + item 2 of wh) # dock is on monitor
+                  set dockOnMonitorUnderCursor to true
+               end if
             end if
-         --    if (dockX >= item 1 of xy and dockX <= item 1 of xy + item 1 of wh and dockY >= item 2 of xy and dockY <= item 2 of xy + item 2 of wh) # dock is on monitor
-         --       if (X >= item 1 of xy and X <= item 1 of xy + item 1 of wh and Y >= item 2 of xy and Y <= item 2 of xy + item 2 of wh) then set dockOnMonitorUnderCursor to true # cursor is on monitor
-         --    end if
          end repeat
-         return dockOnMonitorUnderCursor
          if dockautohide or not(dockOnMonitorUnderCursor)
             set dockWidth to 0
             set dockHeight to 0
