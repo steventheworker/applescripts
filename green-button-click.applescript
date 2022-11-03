@@ -39,7 +39,7 @@ tell application "System Events"
       set tarWin to window focusedWIndex
       set isFullScreen to value of attribute "AXFullScreen" of tarWin
 
-      if isFullScreen or tarAppID is equal to "com.apple.finder" or tarAppID is equal to "com.apple.preview"
+      if isFullScreen or (tarAppID is equal to "com.apple.finder" and subrole of (window 1) is equal to "Quick Look") or tarAppID is equal to "com.apple.preview"
          tell application "BetterTouchTool" to trigger_named "default green button" # default
       else
          set alreadyFullWH to false
