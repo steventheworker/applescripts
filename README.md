@@ -69,8 +69,6 @@ The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT c
 
 ## "SteviaOS" -aka the almagamation of these files and these apps:
 
-#
-
 -   required:
     -   **[BetterTouchTool](https://folivora.ai/)** &nbsp; &nbsp; --most scripts don't rely much, if at all on BTT and can be rewritten to work with other automation apps (eg: [Karabiner Elements](https://github.com/pqrs-org/Karabiner-Elements) (for mouse & key bindings only))
     -   **[scriptable AltTab](https://github.com/steventheworker/alt-tab-macos/releases/)**
