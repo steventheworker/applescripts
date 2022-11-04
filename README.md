@@ -14,11 +14,15 @@ and finally, import the triggers (in "BTT Settings" folder) to BetterTouchTool i
 
 # Windows™ window management: (requires [AltTab mod](https://github.com/steventheworker/alt-tab-macos/releases/download/1.1/DockAltTab.AltTab.v6.46.1.zip))
 
+🔴(cmd-shift-w)🌕(cmd-m)🟢(green-button-click.applescript)
+
+(\*\***new**\*\*) clicking the green button will maximize the windows or restore the old window size & position like on Windows™ (w/ exceptions eg: Finder Preview windows)
+
 The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT cycling (just like on Windows™).
 
-"click-cmd-cycle-windows" & "click-shift-file-new" gives Windows™ dock behavior where holding shift/cmd while clicking a dock icon creates a new window / cycles an apps windows.
+🖱️ "click-cmd-cycle-windows" & "click-shift-file-new" &nbsp; &nbsp; &nbsp;--holding shift/cmd while clicking a dock icon creates a new window / cycles an apps windows
 
-**Note**: if an apps tabs aren't closing (unimplemented), remap cmd+w/cmd+shift+w (for that specific app) on BTT to itself w/ "prevent recursive triggers" checked (for default behavior). And [report it!](https://github.com/steventheworker/applescripts/issues)
+**<u>Note</u>**: if an apps tabs or popup windows aren't closing (unimplemented), remap cmd+w/cmd+shift+w (for that specific app) on BTT to cmd+w w/ "prevent recursive triggers" checked (for default behavior). And [report it!](https://github.com/steventheworker/applescripts/issues) &nbsp; &nbsp; --or disable BTT with [Fn + Ctrl + Opt + Cmd + D], close the window, and use the shortcut again to reenable BTT
 
 &nbsp;
 
@@ -60,3 +64,20 @@ The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT c
     -   Cmd+Q will trigger Cmd+W (Safari/Xcode/few others)
 -   Multiple instances of VLC / Blender (line 1 (APP_PATH) in click-shift-file-new)
 -   Alt+Drag to move window around
+
+&nbsp;
+
+## "SteviaOS" -aka the almagamation of these files and these apps:
+
+#
+
+-   required:
+    -   **[BetterTouchTool](https://folivora.ai/)** &nbsp; &nbsp; --most scripts don't rely much, if at all on BTT and can be rewritten to work with other automation apps (eg: [Karabiner Elements](https://github.com/pqrs-org/Karabiner-Elements) (for mouse & key bindings only))
+    -   **[scriptable AltTab](https://github.com/steventheworker/alt-tab-macos/releases/)**
+        -   (global Keyboard Shortcuts) change the behavior of cmd-shift-w, cmd-w, cmd-m (cycle macOS windows like Windows™)
+        -   (BTT trackpad gestures) 4 swipe up/down &nbsp; &nbsp;--displays AltTab (all/single app view)
+        -   (BTT trackpad gestures) 3 clickswipe up/down &nbsp; &nbsp; --displays AltTab (all/single app view) &nbsp; &nbsp; &nbsp;... waits 250 milliseconds & triggers a switch (select 1st preview in list)
+-   optional:
+    -   **[screenhook](https://github.com/steventheworker/screenhook)** (listen to clicks without modifers / on the corners of the screen & run applescripts when monitors are attached)
+        -   used in "cornerRightTowards" Desktop peak (BTT named triggers) &nbsp; &nbsp; --keep Desktop Exposé showing even after "cornerRightAway" triggers
+        -   when monitor is attached: run applescript to clean/sort desktop icons
