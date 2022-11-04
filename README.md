@@ -1,14 +1,14 @@
 # Install
 
-After cloning, in the "BTT Settings" folder, open "triggers.bttpreset", then replace all:
+1. After cloning, in the "BTT Settings" folder, open "triggers.bttpreset", then replace all:
 
 &nbsp; &nbsp; &nbsp;"\\/Users\\/super\\/Desktop\\/important\\/SystemFiles\\/" &nbsp; --with the path you've placed the applescripts (and don't forget to add backslashes back in!)
 
-Change APPLESCRIPTS_FOLDER in "afterBTTLaunched.applescript" to that same path (minus the blackslashes)
+2. Change APPLESCRIPTS_FOLDER in "afterBTTLaunched.applescript" to that same path (minus the blackslashes)
 
-Compile all .applescript to .scpt by running &nbsp; `bash ./compile-all.sh`
+3. Compile all .applescript to .scpt by running &nbsp; `bash ./compile-all.sh`
 
-and finally, import the triggers (in "BTT Settings" folder) to BetterTouchTool in order to use the scripts
+4. and finally, import the triggers (in "BTT Settings" folder) to BetterTouchTool in order to use the scripts
 
 &nbsp;
 
