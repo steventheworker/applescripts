@@ -39,7 +39,7 @@ tell application "System Events"
       set tarWin to window focusedWIndex
       set isFullScreen to value of attribute "AXFullScreen" of tarWin
 
-      if isFullScreen or (tarAppID is equal to "com.apple.finder" and subrole of (window 1) is equal to "Quick Look") or tarAppID is equal to "com.apple.preview"
+      if isFullScreen or (tarAppID is equal to "com.apple.finder" and subrole of (window 1) is equal to "Quick Look") or tarAppID is equal to "com.apple.preview" or tarApp is equal to "Parallels Mac VM"
          tell application "BetterTouchTool" to trigger_named "default green button" # default
       else
          set alreadyFullWH to false
@@ -112,6 +112,7 @@ end tell
 # helper fn's
 on getPName(axTitle) # process name from axTitle (eg:   tell process getPName("Visual Studio Code")  =>  tell process "Code")
 	#todo: find all exceptions: (apps whose app name !== process name (examples below))
+	if axTitle is equal to "Parallels Mac VM" then return "Parallels Desktop"
 	if axTitle is equal to "Alfred 4" or axTitle is equal to "Alfred 5" then return "Alfred"
 	if axTitle is equal to "Visual Studio Code" then return "Code"
 	if axTitle is equal to "iTerm" then return "iTerm2"
