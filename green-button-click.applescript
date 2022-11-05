@@ -67,6 +67,7 @@ tell application "System Events"
          repeat with m in monitors
             set xy to item 1 of m
             set wh to item 2 of m
+            set offsetY to (H - item 2 of wh)
             set fullWH to {item 1 of wh, item 2 of wh}
             set zeroPt to {item 1 of xy, item 2 of xy}
             if dockPos is equal to bottom
@@ -86,14 +87,17 @@ tell application "System Events"
             -- end if
             set pos to position of tarWin
             set s to size of tarWin
-            if not(item 2 of xy is equal to 0) then set item 2 of pos to (H - item 2 of wh) - item 2 of pos # carbonPoint/CGPpoint/some sort of conversion
-            log "x:" & (item 1 of pos) & " y:" & (item 2 of pos) & "\t~~ (" & (item 1 of zeroPt) & ", " & (item 2 of zeroPt) & ")  \t\t\t\t&&\t\t (win) " & (item 1 of s) & "x" & (item 2 of s) & " ~~ (\"full\") " & (item 1 of fullWH) & "x" & (item 2 of fullWH)
-            if (my compareMagnitude(item 1 of s - item 1 of fullWH, 2) and my compareMagnitude(item 2 of s - item 2 of fullWH, 2)) and (my compareMagnitude(item 1 of pos - item 1 of zeroPt, 2) and my compareMagnitude(item 2 of pos - item 2 of zeroPt, 2))
+            -- if not(item 2 of xy is equal to 0) then set item 2 of pos to offsetY - item 2 of pos # carbonPoint/CGPpoint/some sort of conversion
+            if not(item 2 of xy is equal to 0) then set item 2 of pos to item 2 of pos + menuHeight
+            log {item 2 of pos, item 2 of zeroPt}
+            -- log "x:" & (item 1 of pos) & " y:" & (item 2 of pos) & "\t~~ (" & (item 1 of zeroPt) & ", " & (item 2 of zeroPt) & ")  \t\t\t\t&&\t\t (win) " & (item 1 of s) & "x" & (item 2 of s) & " ~~ (\"full\") " & (item 1 of fullWH) & "x" & (item 2 of fullWH)
+
+            if (my compareMagnitude(item 1 of s - item 1 of fullWH, 3) and my compareMagnitude(item 2 of s - item 2 of fullWH, 3)) and (my compareMagnitude(item 1 of pos - item 1 of zeroPt, 3) and my compareMagnitude(item 2 of pos - item 2 of zeroPt, 3))
                set alreadyFullWH to true
                exit repeat
             end if
          end repeat
-
+-- return {alreadyFullWH, {X, Y}}
          if alreadyFullWH
             key code 51 using {control down, option down} # (delete) --restore size/position (rectangle shortcut)
             return "restored window size & position"
