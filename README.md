@@ -56,6 +56,7 @@ The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT c
 
 ## Miscellaneous / Caveats
 
+-   always show spaces thumbnails in mission control
 -   Double click menu whitespace = show desktop
 -   Move mouse to Corner (right) = show desktop (with delay)
 -   Cmd+Shift+H = hide on some apps (VSCode/text editors)
