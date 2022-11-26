@@ -14,19 +14,17 @@
 
 # Windows™ window management: (requires [AltTab mod](https://github.com/steventheworker/alt-tab-macos/releases/download/1.1/DockAltTab.AltTab.v6.46.1.zip))
 
-🔴(cmd-shift-w)🌕(cmd-m)🟢(green-button-click.applescript)
+🟢 (green-button-click.applescript) clicking the green button will maximize the windows or restore the old window size & position like on Windows™ (w/ exceptions eg: Finder QuickLook Preview windows)
 
-(\*\***new**\*\*) clicking the green button will maximize the windows or restore the old window size & position like on Windows™ (w/ exceptions eg: Finder Preview windows)
-
-The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT cycling (just like on Windows™).
+The 🌕 cmd-m, 🔴 cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT cycling (just like on Windows™).
 
 🖱️ "click-cmd-cycle-windows" & "click-shift-file-new" &nbsp; &nbsp; &nbsp;--holding shift/cmd while clicking a dock icon creates a new window / cycles an apps windows
 
-**<u>Note</u>**: if an apps tabs or popup windows aren't closing (unimplemented), remap cmd+w/cmd+shift+w (for that specific app) on BTT to cmd+w w/ "prevent recursive triggers" checked (for default behavior). And [report it!](https://github.com/steventheworker/applescripts/issues) &nbsp; &nbsp; --or disable BTT with [Fn + Ctrl + Opt + Cmd + D], close the window, and use the shortcut again to reenable BTT
+**<u>Troubleshoot</u>**: if an apps tabs or popup windows aren't closing (unimplemented in the script), remap cmd+w/cmd+shift+w (for that specific app) on BTT to cmd+w w/ "prevent recursive triggers" checked (for default behavior). And [report it!](https://github.com/steventheworker/applescripts/issues) &nbsp; &nbsp; --or disable BTT with [Fn + Ctrl + Opt + Cmd + D], close the window, and use the shortcut again to reenable BTT
 
 &nbsp;
 
-# BetterTouchTool features
+# BetterTouchTool bindings
 
 [System Preferences Setup](https://www.youtube.com/channel/UCBcY4PTKNWXDXTt6RsHGRjQ/videos) (video coming soon)
 
@@ -40,7 +38,6 @@ The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT c
 -   Cmd+Control+B = Connect Airpods
 -   Cmd+Option+Control+N = HTML/Network Inspector for mobile devices (Safari) (Must rename device se2020->yourdevicename)
 -   Cmd+Control+[ or ] = Move mouse left/right whole monitor in pixels
--   Personal: I use f4 = show desktop, CapsLock = mission control (via karabiner elements)
 -   Cmd+Option+LeftArrow or RightArrow = move to next/previous tab
 -   Cmd+Option+Enter = Duplicate Tab (Safari/iTerm2)
 
@@ -57,8 +54,9 @@ The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT c
 ## Miscellaneous / Caveats
 
 -   always show spaces thumbnails in mission control
--   Double click menu whitespace = show desktop
--   Move mouse to Corner (right) = show desktop (with delay)
+-   show desktop: (Fn+D)
+    -   Double click menu whitespace
+    -   Move mouse to Corner (right) (peak w/ delay using sceenhook)
 -   Cmd+Shift+H = hide on some apps (VSCode/text editors)
     -   Cmd+H = find/replace on these apps
 -   Cmd+Shift+Q = quit on some apps (so I won't accidentally quit heavy apps)
@@ -66,7 +64,12 @@ The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT c
 -   Multiple instances of VLC / Blender (line 1 (APP_PATH) in click-shift-file-new)
 -   Alt+Drag to move window around
 
-&nbsp;
+Finder
+
+-   Cmd+Opt+N = new file prompt
+-   Cmd+Opt+T = new blank typescript file prompt
+-   Enter = Open file/app
+-   Cmd+I => Cmd+Opt+I &nbsp; &nbsp; && &nbsp; &nbsp; Cmd+Opt+I => Cmd+I &nbsp; &nbsp; (prevent multiple info popups for selected items)
 
 ## "SteviaOS" -aka the almagamation of these files and these apps:
 
@@ -76,7 +79,16 @@ The cmd-m, cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT c
         -   (global Keyboard Shortcuts) change the behavior of cmd-shift-w, cmd-w, cmd-m (cycle macOS windows like Windows™)
         -   (BTT trackpad gestures) 4 swipe up/down &nbsp; &nbsp;--displays AltTab (all/single app view)
         -   (BTT trackpad gestures) 3 clickswipe up/down &nbsp; &nbsp; --displays AltTab (all/single app view) &nbsp; &nbsp; &nbsp;... waits 250 milliseconds & triggers a switch (select 1st preview in list)
--   optional:
     -   **[screenhook](https://github.com/steventheworker/screenhook)** (listen to clicks without modifers / on the corners of the screen & run applescripts when monitors are attached)
         -   used in "cornerRightTowards" Desktop peak (BTT named triggers) &nbsp; &nbsp; --keep Desktop Exposé showing even after "cornerRightAway" triggers
         -   when monitor is attached: run applescript to clean/sort desktop icons
+    -   [Rectangle](https://rectangleapp.com/) (or whatever lets you map Cmd+Opt+Enter => maximize window & Cmd+Opt+Delete => restore window size) &nbsp; --used in green-button-click.applescript
+-   recommended:
+    -   DockAltTab
+
+## ... and these System Settings
+
+-   F4 = show desktop (via karabiner elements (via simple modifications tab))
+-   Trackpad -> More Gesture -> Mission Control Off
+-   Trackpad -> More Gesture -> App Exposé Off
+    -   handled by BTT
