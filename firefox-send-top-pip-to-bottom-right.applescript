@@ -11,7 +11,7 @@ end tell
 
 tell application "System Events"
 	tell process "Firefox"
-		set screenWidth to 1440
+		if not(title of window 1 is equal to "Picture-in-Picture") then return
 		set _ws to size of window 1
 		set winWidth to item 1 of _ws
 		set winHeight to item 2 of _ws
