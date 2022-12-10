@@ -84,11 +84,12 @@ Finder
         -   when monitor is attached: run applescript to clean/sort desktop icons
     -   [Rectangle](https://rectangleapp.com/) (or whatever lets you map Cmd+Opt+Enter => maximize window & Cmd+Opt+Delete => restore window size) &nbsp; --used in green-button-click.applescript
 -   recommended:
-    -   DockAltTab
+    -   [DockAltTab](https://dockalttab.netlify.app/) &nbsp; / &nbsp; [Dock Exposé](https://dockexpose.netlify.app/)
+    -   [safari-userscripts](https://github.com/steventheworker/safari-userscripts)
 
 ## ... and these System Settings
 
--   F4 = show desktop (via karabiner elements (via simple modifications tab))
--   Trackpad -> More Gesture -> Mission Control Off
--   Trackpad -> More Gesture -> App Exposé Off
-    -   handled by BTT
+-   handled by BTT &nbsp; --leaving these on messes with remapping "Mission Control Immediately" / all directions of 3 finger clickswipes
+
+    -   Trackpad -> More Gesture -> Mission Control Off
+    -   and disable 3 finger swiping between desktop
