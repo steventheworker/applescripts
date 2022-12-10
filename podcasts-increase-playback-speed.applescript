@@ -9,7 +9,7 @@ tell application "System Events"
          if not (checked is equal to missing value) then set elIndex to i
          set i to (i + 1)
       end repeat
-      if elIndex is equal to -1 then set elIndex to 0
+      if elIndex is equal to -1 then set elIndex to 5 # weird Ventura bug, 1.75x speed checkbox (5) is uncheckable
       if elIndex >= (count of els) then return
       -- return elIndex
       click item (elIndex + 1) of els

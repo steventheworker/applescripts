@@ -10,7 +10,7 @@ tell application "System Events"
          set i to (i + 1)
       end repeat
       if elIndex is equal to -1
-         set elIndex to 0
+         set elIndex to 5 # weird Ventura bug, 1.75x speed checkbox (5) is uncheckable
       else
          if elIndex is equal to 1 then return # can't go lower
       end if
