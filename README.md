@@ -68,8 +68,8 @@ Finder
 
 -   Cmd+Opt+N = new file prompt
 -   Cmd+Opt+T = new blank typescript file prompt
--   Enter = Open file/app
--   Cmd+I => Cmd+Opt+I &nbsp; &nbsp; && &nbsp; &nbsp; Cmd+Opt+I => Cmd+I &nbsp; &nbsp; (prevent multiple info popups for selected items)
+-   Windows navigation... Enter = Open file/app, Backspace = back arrow
+-   Cmd+I => Cmd+Opt+I &nbsp; &nbsp; && &nbsp; &nbsp; Cmd+Opt+I => Cmd+I &nbsp; &nbsp; (prevents multiple info popups for selected items)
 
 ## "SteviaOS" -aka the almagamation of these files and these apps:
 
