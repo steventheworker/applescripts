@@ -75,6 +75,14 @@ Finder
 -   Windows navigation... Enter = Open file/app, Backspace = back arrow
 -   Cmd+I => Cmd+Opt+I &nbsp; &nbsp; && &nbsp; &nbsp; Cmd+Opt+I => Cmd+I &nbsp; &nbsp; (prevents multiple info popups for selected items)
 
+&nbsp;
+
+&nbsp;
+
+#
+
+&nbsp;
+
 ## "SteviaOS" -aka the almagamation of these files and these apps:
 
 -   required:
