@@ -29,7 +29,7 @@
 -   Cmd+Option+LeftArrow or RightArrow = move to next/previous tab
 -   Cmd+Option+Enter = Duplicate Tab (Safari/iTerm2)
 
-### Windows™ window management: (requires [AltTab mod](https://github.com/steventheworker/alt-tab-macos/releases/download/1.1/DockAltTab.AltTab.v6.46.1.zip))
+### Windows™ window management: (requires [AltTab mod](https://github.com/steventheworker/alt-tab-macos/releases/download/1.3/DockAltTab.AltTab.v6.51.0.zip))
 
 🟢 (green-button-click.applescript) clicking the green button will maximize the windows or restore the old window size & position like on Windows™ (w/ exceptions eg: Finder QuickLook Preview windows)
 
