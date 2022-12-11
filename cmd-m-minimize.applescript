@@ -9,7 +9,7 @@ tell application "System Events"
 		try # get the active window (helps w/ Firefox (Picture-in-Picture)
 			set x to 1
 			repeat with w in windows
-				if value of attribute "AXMain" of w is equal to true -- if focused of w is equal to true
+				if value of attribute "AXMain" of w is equal to true or focused of w is equal to true
 					set focusedWIndex to x
 					exit repeat
 				end if
@@ -36,7 +36,7 @@ tell application "System Events"
 		try # get new active window (helps w/ Firefox (Picture-in-Picture)
 			set x to 1
 			repeat with w in windows
-				if value of attribute "AXMain" of w is equal to true -- if focused of w is equal to true
+				if value of attribute "AXMain" of w is equal to true or focused of w is equal to true
 					set newFocusedWIndex to x
 					exit repeat
 				end if

@@ -1,5 +1,7 @@
 # Install
 
+[Watch on YouTube](https://www.youtube.com/channel/UCBcY4PTKNWXDXTt6RsHGRjQ/videos) (video coming soon)
+
 1. After cloning, in the "BTT Settings" folder, open "triggers.bttpreset", then replace all:
 
 &nbsp; &nbsp; &nbsp;"\\/Users\\/super\\/Desktop\\/important\\/SystemFiles\\/" &nbsp; --with the path you've placed the applescripts (and don't forget to add backslashes back in!)
@@ -25,8 +27,6 @@ The 🌕 cmd-m, 🔴 cmd-w, & cmd-shift-w scripts minimize/close tabs or windows
 &nbsp;
 
 # BetterTouchTool bindings
-
-[System Preferences Setup](https://www.youtube.com/channel/UCBcY4PTKNWXDXTt6RsHGRjQ/videos) (video coming soon)
 
 ## Global Keyboard Shortcuts
 
