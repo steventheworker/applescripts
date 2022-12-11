@@ -41,8 +41,6 @@ The 🌕 cmd-m, 🔴 cmd-w, & cmd-shift-w scripts minimize/close tabs or windows
 
 &nbsp;
 
-#
-
 &nbsp;
 
 ## Trackpad Gestures
@@ -78,8 +76,6 @@ Finder
 &nbsp;
 
 &nbsp;
-
-#
 
 &nbsp;
 
