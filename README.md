@@ -14,18 +14,6 @@
 
 &nbsp;
 
-# Windows™ window management: (requires [AltTab mod](https://github.com/steventheworker/alt-tab-macos/releases/download/1.1/DockAltTab.AltTab.v6.46.1.zip))
-
-🟢 (green-button-click.applescript) clicking the green button will maximize the windows or restore the old window size & position like on Windows™ (w/ exceptions eg: Finder QuickLook Preview windows)
-
-The 🌕 cmd-m, 🔴 cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT cycling (just like on Windows™).
-
-🖱️ "click-cmd-cycle-windows" & "click-shift-file-new" &nbsp; &nbsp; &nbsp;--holding shift/cmd while clicking a dock icon creates a new window / cycles an apps windows
-
-**<u>Troubleshoot</u>**: if an apps tabs or popup windows aren't closing (unimplemented in the script), remap cmd+w/cmd+shift+w (for that specific app) on BTT to cmd+w w/ "prevent recursive triggers" checked (for default behavior). And [report it!](https://github.com/steventheworker/applescripts/issues) &nbsp; &nbsp; --or disable BTT with [Fn + Ctrl + Opt + Cmd + D], close the window, and use the shortcut again to reenable BTT
-
-&nbsp;
-
 # BetterTouchTool bindings
 
 ## Global Keyboard Shortcuts
@@ -40,6 +28,22 @@ The 🌕 cmd-m, 🔴 cmd-w, & cmd-shift-w scripts minimize/close tabs or windows
 -   Cmd+Control+[ or ] = Move mouse left/right whole monitor in pixels
 -   Cmd+Option+LeftArrow or RightArrow = move to next/previous tab
 -   Cmd+Option+Enter = Duplicate Tab (Safari/iTerm2)
+
+### Windows™ window management: (requires [AltTab mod](https://github.com/steventheworker/alt-tab-macos/releases/download/1.1/DockAltTab.AltTab.v6.46.1.zip))
+
+🟢 (green-button-click.applescript) clicking the green button will maximize the windows or restore the old window size & position like on Windows™ (w/ exceptions eg: Finder QuickLook Preview windows)
+
+The 🌕 cmd-m, 🔴 cmd-w, & cmd-shift-w scripts minimize/close tabs or windows WITHOUT cycling (just like on Windows™).
+
+🖱️ "click-cmd-cycle-windows" & "click-shift-file-new" &nbsp; &nbsp; &nbsp;--holding shift/cmd while clicking a dock icon creates a new window / cycles an apps windows
+
+**<u>Troubleshoot</u>**: if an apps tabs or popup windows aren't closing (unimplemented in the script), remap cmd+w/cmd+shift+w (for that specific app) on BTT to cmd+w w/ "prevent recursive triggers" checked (for default behavior). And [report it!](https://github.com/steventheworker/applescripts/issues) &nbsp; &nbsp; --or disable BTT with [Fn + Ctrl + Opt + Cmd + D], close the window, and use the shortcut again to reenable BTT
+
+&nbsp;
+
+#
+
+&nbsp;
 
 ## Trackpad Gestures
 
