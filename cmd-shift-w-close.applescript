@@ -24,7 +24,7 @@ if not (tarAppPName is equal to "Premiere Pro" or tarApp is equal to "Emacs") # 
 			try # get the active window (helps w/ Firefox (Picture-in-Picture) / Floating)
 				set x to 1
 				repeat with w in windows
-					set isOSPopupWindow to (x is equal to 1) and (title of w is equal to "Fonts" or title of w is equal to "Colors") and (subrole of w is equal to "AXSystemFloatingWindow" or subrole of w is equal to "AXFloatingWindow") # "Fonts" windows never have main or focused = true, "Colors" sometimes does
+					set isOSPopupWindow to (x is equal to 1) and (title of w is equal to "Fonts" or title of w is equal to "Colors" or (tarApp is equal to "Finder" and title of w ends with " Info")) and (subrole of w is equal to "AXSystemFloatingWindow" or subrole of w is equal to "AXFloatingWindow") # "Fonts" windows never have main or focused = true, "Colors" sometimes does, Finder info windows sometimes have focused set, sometimes don't
 					if value of attribute "AXMain" of w is equal to true or focused of w is equal to true or isOSPopupWindow
 						set focusedWIndex to x
 						exit repeat
