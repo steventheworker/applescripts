@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleName</key>
-	<string>NEWFILE_KEYSHORTCUT(tsx)</string>
+	<string>open-remote</string>
 </dict>
 </plist>

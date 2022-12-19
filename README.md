@@ -73,7 +73,17 @@ Finder
 -   Windows navigation... Enter = Open file/app, Backspace = back arrow
 -   Cmd+I => Cmd+Opt+I &nbsp; &nbsp; && &nbsp; &nbsp; Cmd+Opt+I => Cmd+I &nbsp; &nbsp; (prevents multiple info popups for selected items)
 
-&nbsp;
+Firefox
+
+-   (global browser shortcut) firefox-new-cmd-shift-m.applescript opens new windows in 1st container
+-   Command + T= new tab in 1st container (cmd+shift+1 = no container)
+-   screenhook specific features are listed in its README (paraphrased below)
+
+Safari
+
+-   Command+Option+Shift+M = 2nd global browser shortcut ("make" new window)
+
+    &nbsp;
 
 &nbsp;
 
