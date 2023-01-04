@@ -25,7 +25,7 @@ if not (tarApp is equal to "Emacs") # apps that don't work by process (AT ALL)
 			try # get the active window (helps w/ Firefox (Picture-in-Picture) / Floating)
 				set x to 1
 				repeat with w in windows
-					set isOSPopupWindow to (x is equal to 1) and (title of w is equal to "Fonts" or title of w is equal to "Colors" or title of w is equal to "Media" or (tarApp is equal to "Finder" and title of w ends with " Info")) and (subrole of w is equal to "AXSystemFloatingWindow" or subrole of w is equal to "AXFloatingWindow") # "Fonts" windows never have main or focused = true, "Colors" sometimes does, Finder info windows sometimes have focused set, sometimes don't
+					set isOSPopupWindow to (x is equal to 1)  and  (subrole of w is equal to "AXSystemFloatingWindow" or subrole of w is equal to "AXFloatingWindow")  and  (title of w is equal to "" or title of w is equal to "Fonts" or title of w is equal to "Colors" or title of w is equal to "Media" or (tarApp is equal to "Finder" and title of w ends with " Info")) # "Fonts" windows never have main or focused = true, "Colors" sometimes does, Finder info windows sometimes have focused set, sometimes don't         Notes "Photo Browser" title is empty ""
 					if value of attribute "AXMain" of w is equal to true or focused of w is equal to true or isOSPopupWindow
 						set focusedWIndex to x
 						exit repeat
