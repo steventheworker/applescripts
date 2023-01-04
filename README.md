@@ -6,6 +6,8 @@
 
 &nbsp; &nbsp; &nbsp;"\\/Users\\/super\\/Desktop\\/important\\/SystemFiles\\/" &nbsp; --with the path you've placed the applescripts (and don't forget to add backslashes back in!)
 
+-   Note: I put all my apps in /Applications/MyApps (barring apps that came with macOS and apps that can't be moved (eg: Karabiner, Lulu, etc.)) &nbsp; &nbsp; --apps won't show in BTT unless you do a replace all for "/MyApps"
+
 2. Change APPLESCRIPTS_FOLDER in "afterBTTLaunched.applescript" to that same path (minus the blackslashes)
 
 3. Compile all .applescript to .scpt by running &nbsp; `bash ./compile-all.sh`
@@ -111,3 +113,5 @@ Safari
 
     -   Trackpad -> More Gesture -> Mission Control Off
     -   and disable 3 finger swiping between desktop
+
+Note: I don't use 3 finger drag, and don't yet know if it will interfere
