@@ -1,3 +1,4 @@
+# open a new window (cmd+n or cmd+t) and attaches it (cmd+shift+d) it (detached by default)
 set max to 3
 set i to 0
 
