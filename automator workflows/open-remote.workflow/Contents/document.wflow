@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>512</string>
+	<string>520</string>
 	<key>AMApplicationVersion</key>
 	<string>2.10</string>
 	<key>AMDocumentVersion</key>
@@ -55,7 +55,7 @@
 						<array>
 							<true/>
 							<string></string>
-							<string>http://192.168.0.160:8000</string>
+							<string>http://192.168.0.150:8000</string>
 						</array>
 					</array>
 				</dict>
@@ -298,7 +298,7 @@
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>0BB24A9E-6035-4F39-88B5-F235460F4A3C</key>
+		<key>1A833F73-69B1-4114-850D-68BBA692F57C</key>
 		<dict>
 			<key>from</key>
 			<string>BB0C1221-A16E-4146-BC35-BF79B1D9584A - BB0C1221-A16E-4146-BC35-BF79B1D9584A</string>
