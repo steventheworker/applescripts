@@ -20,7 +20,6 @@ tell application "System Events"
 	end tell
 end tell
 
-
 # get new active app
 tell application "AltTab" to trigger
 delay 0.05 # let app fully activate
@@ -47,7 +46,7 @@ tell application "System Events"
       set winCount to (count of windows) - (count of (windows whose value of attribute "AXMinimized" is true)) - (count of (windows whose title is "Picture-in-Picture"))
       if winCount is equal to 0 then return "0 windows"
 		if tarApp is equal to "KeyCastr" then set wIndex to wIndex + 1 # apps where window 1 === uncloseable overlay
-		
+
 		# get wIndex, handle floating windows
 		set isFloatingWindow to (focusedWIndex is equal to 1 and newFocusedWIndex > 1) or (focusedWIndex is equal to 1 and newFocusedWIndex is equal to 1 and nextApp is equal to tarApp and winCount > 1)
 		set floatingWinExists to isFloatingWindow or (focusedWIndex > 1 or newFocusedWIndex > 1)
@@ -61,7 +60,6 @@ tell application "System Events"
 				end if
 			else
 				set wIndex to 2
-				if (nextApp is equal to tarApp) then set wIndex to 1
 			end if
 		end if
 
