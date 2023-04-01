@@ -93,6 +93,7 @@ if not (tarApp is equal to "Emacs") # apps that don't work by process (AT ALL)
 end if
 
 if (tarApp is equal to "Firefox") then tell application "Firefox" to set wID to id of window focusedWIndex
+if (tarApp is equal to "Firefox Developer Edition") then tell application "Firefox Developer Edition" to set wID to id of window focusedWIndex
 
 # tab apps - tab exists? by app
 if tarApp is equal to "Google Chrome" then tell application "Google Chrome" to if count of (tabs of window focusedWIndex) > 1 then set closeTab to true
@@ -107,7 +108,7 @@ end if
 # fallback to always trigger commandW (in tab apps / reclaimFocus is true)
 set reclaimFocus to false	# true means unscriptable & un-GUI scriptable apps (eg: electron based apps, Firefox, etc.) === Fallback to commandW + reclaimFocus   </3
 # if line order: impossibleApps, ChatApps, API build Apps, MailApps (since comments on "Â" lines breaks builds)
-if (tarApp is equal to "Firefox" or tarAppPName is equal to "Adobe Illustrator" or tarApp is equal to "Termius" or tarApp is equal to "Sublime Text"Â
+if ((tarApp is equal to "Firefox" or tarApp is equal to "Firefox Developer Edition") or tarAppPName is equal to "Adobe Illustrator" or tarApp is equal to "Termius" or tarApp is equal to "Sublime Text"Â
 	or tarApp is equal to "Slack"Â
 	or tarApp is equal to "Postman" or tarApp is equal to "Insomnia"Â
 	or tarApp is equal to "Postbox")Â
@@ -274,7 +275,7 @@ on quitAt0(_a)
 	# count windows remaining and close / hide (at 0)
 	-- apple apps
 	if (tarApp is equal to "Calendar" or tarApp is equal to "Accessibility Inspector" or tarApp is equal to "Mail" or tarApp is equal to "TextEdit" or tarApp is equal to "Script Editor" or tarApp is equal to "Activity Monitor" or tarApp is equal to "Maps" or tarApp is equal to "Notes" or tarApp is equal to "Terminal" or tarApp is equal to "Preview" or tarApp is equal to "Messages"Â
-		or tarApp is equal to "Firefox" or tarAppPName is equal to "Code" or tarApp is equal to "VLC" or tarApp is equal to "Spark" or tarApp is equal to "Apollo" or tarApp is equal to "Sublime Text" or tarApp is equal to "Termius" or tarApp is equal to "Friendly Streaming" or tarApp is equal to "uFocus" or tarAppPName is equal to "Obsidian") -- other apps
+		or (tarApp is equal to "Firefox" or tarApp is equal to "Firefox Developer Edition") or tarAppPName is equal to "Code" or tarApp is equal to "VLC" or tarApp is equal to "Spark" or tarApp is equal to "Apollo" or tarApp is equal to "Sublime Text" or tarApp is equal to "Termius" or tarApp is equal to "Friendly Streaming" or tarApp is equal to "uFocus" or tarAppPName is equal to "Obsidian") -- other apps
 		tell application "System Events"
 			tell process tarAppPName
 				if tarApp is equal to "Accessibility Inspector" # apps that always have a floating window open (shows on process, but not AltTab)
@@ -292,8 +293,9 @@ on quitAt0(_a)
 				end if
 			end tell
 
-			if (tarApp is equal to "Firefox")
-				tell application "Firefox" to set wID2 to id of window focusedWIndex
+			if (tarApp is equal to "Firefox" or tarApp is equal to "Firefox Developer Edition")
+				if (tarApp is equal to "Firefox") then tell application "Firefox" to set wID2 to id of window focusedWIndex
+				if (tarApp is equal to "Firefox Developer Edition") then tell application "Firefox Developer Edition" to set wID2 to id of window focusedWIndex
 				tell application "BetterTouchTool"
 						set tabOrWindow to "t"
 						if (not (wID is equal to wID2)) then set tabOrWindow to "w"
