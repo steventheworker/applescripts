@@ -1,3 +1,4 @@
+# Option + /      global shortcut, focuses the 1st input on the safari automator instance
 with timeout of 1 second
 	tell application "System Events"
 		tell process "Automator Workflow Runner (BetterTouchTool, open-remote)"

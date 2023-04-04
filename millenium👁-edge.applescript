@@ -1,3 +1,4 @@
+# option + shift + m - positions Safari Automator Instance @ bottom-right corner (points to millenium-eye server @ 196.168.0.x:8000)
 with timeout of 1 second
 	tell application "System Events"
 		tell process "Automator Workflow Runner (BetterTouchTool, open-remote)"
