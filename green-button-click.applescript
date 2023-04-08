@@ -24,8 +24,11 @@ tell application "System Events"
 		set {dockWidth, dockHeight} to the size of list 1
       set {dockX, dockY} to the position of list 1
       # todo: outer margin is 2px or 1px depending on monitor / dockPos...???
-      if (dockPos is equal to bottom) then set dockHeight to dockHeight + 1 + 5 # dockHeight has marginTop (2px) and marginBottom (5px) when autohide is off
-      if (not(dockPos is equal to bottom)) then set dockWidth to dockWidth + 1 + 5 # dockWidth has marginLeft/Right of (5px) and marginLeft/Right of (2px)
+      if (dockPos is equal to bottom)
+         set dockHeight to dockHeight + 1 + 5 # dockHeight has marginTop (2px) and marginBottom (5px) when autohide is off
+      else
+         set dockWidth to dockWidth + 1 + 5 # dockWidth has marginLeft/Right of (5px) and marginLeft/Right of (2px)
+      end if
    end tell
    tell process tarAppPName
       set i to 1
@@ -72,6 +75,9 @@ tell application "System Events"
             set zeroPt to {item 1 of xy, item 2 of xy}
             if dockPos is equal to bottom
                set item 2 of fullWH to item 2 of fullWH - menuHeight - dockHeight
+            end if
+            if (not(menuautohide))
+               set item 2 of fullWH to (item 2 of fullWH - menuHeight)
                set item 2 of zeroPt to item 2 of zeroPt + menuHeight
             end if
             -- if (dockPos is equal to left and onLeftMost) or (dockPos is equal to right and onRightMost)
