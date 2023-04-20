@@ -68,8 +68,8 @@ tell application "System Events"
          
          # see if tarWin already fullWH on a monitor
          repeat with m in monitors
-            set xy to item 1 of m
-            set wh to item 2 of m
+            set xy to item 1 of m # monitor position
+            set wh to item 2 of m # monitor size
             set offsetY to (H - item 2 of wh)
             set fullWH to {item 1 of wh, item 2 of wh}
             set zeroPt to {item 1 of xy, item 2 of xy}
@@ -77,7 +77,7 @@ tell application "System Events"
                set item 2 of fullWH to item 2 of fullWH - menuHeight - dockHeight
             end if
             if (not(menuautohide))
-               set item 2 of fullWH to (item 2 of fullWH - menuHeight)
+               set item 2 of wh to (item 2 of fullWH + menuHeight) # undo monitor size subtracting menubar
                set item 2 of zeroPt to item 2 of zeroPt + menuHeight
             end if
             -- if (dockPos is equal to left and onLeftMost) or (dockPos is equal to right and onRightMost)
