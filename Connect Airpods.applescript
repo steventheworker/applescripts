@@ -1,7 +1,7 @@
 use framework "IOBluetooth"
 use scripting additions
 
-set AirPodsName to "AirPods2"
+set AirPodsName to "Steven's Airpods"
 
 on getFirstMatchingDevice(deviceName)
 	repeat with device in (current application's IOBluetoothDevice's pairedDevices() as list)
