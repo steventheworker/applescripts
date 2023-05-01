@@ -274,7 +274,7 @@ on quitAt0(_a)
 	log _a # logs closing message
 	# count windows remaining and close / hide (at 0)
 	-- apple apps
-	if (tarApp is equal to "Calendar" or tarApp is equal to "Accessibility Inspector" or tarApp is equal to "Mail" or tarApp is equal to "TextEdit" or tarApp is equal to "Script Editor" or tarApp is equal to "Activity Monitor" or tarApp is equal to "Maps" or tarApp is equal to "Notes" or tarApp is equal to "Terminal" or tarApp is equal to "Preview" or tarApp is equal to "Messages"Â
+	if (tarApp is equal to "QuickTime Player" or tarApp is equal to "Calendar" or tarApp is equal to "Accessibility Inspector" or tarApp is equal to "Mail" or tarApp is equal to "TextEdit" or tarApp is equal to "Script Editor" or tarApp is equal to "Activity Monitor" or tarApp is equal to "Maps" or tarApp is equal to "Notes" or tarApp is equal to "Terminal" or tarApp is equal to "Preview" or tarApp is equal to "Messages"Â
 		or (tarApp is equal to "Firefox" or tarApp is equal to "Firefox Developer Edition") or tarAppPName is equal to "Code" or tarApp is equal to "VLC" or tarApp is equal to "Spark" or tarApp is equal to "Apollo" or tarApp is equal to "Sublime Text" or tarApp is equal to "Termius" or tarApp is equal to "Friendly Streaming" or tarApp is equal to "uFocus" or tarAppPName is equal to "Obsidian") -- other apps
 		tell application "System Events"
 			tell process tarAppPName
