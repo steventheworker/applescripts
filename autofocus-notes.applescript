@@ -6,7 +6,12 @@ tell application "System Events"
          set groupCount to count of every group
          set lastGroup to group groupCount
          tell lastGroup
-            set focused of text field 1 to true
+
+            if exists(button 1)
+               click button 1
+            else
+               set focused of text field 1 to true
+            end if
          end tell
       end tell
    end tell
