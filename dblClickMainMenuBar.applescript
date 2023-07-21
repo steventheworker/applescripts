@@ -5,8 +5,5 @@ tell application "BetterTouchTool"
    else
       set_number_variable "cornerRight" to 1.0
    end if
-end tell
-
-tell application "System Events"
-	key code 103 # toggle show/hide desktop
+   trigger_named "showDesktop"
 end tell
