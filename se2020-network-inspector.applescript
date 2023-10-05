@@ -1,4 +1,4 @@
-set phoneName to "iPhone (2)" # phone name as it appears under menu:  Safari -> Develop
+set phoneName to "iPhone" # phone name as it appears under menu:  Safari -> Develop
 # opens an inspector for all tabs currently open on iPhone safari
 tell application "System Events"
 	tell application "Safari" to activate

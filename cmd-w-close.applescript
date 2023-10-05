@@ -109,6 +109,7 @@ end if
 set reclaimFocus to false	# true means unscriptable & un-GUI scriptable apps (eg: electron based apps, Firefox, etc.) === Fallback to commandW + reclaimFocus   </3
 # if line order: impossibleApps, ChatApps, API build Apps, MailApps (since comments on "Â" lines breaks builds)
 if ((tarApp is equal to "Firefox" or tarApp is equal to "Firefox Developer Edition") or tarAppPName is equal to "Adobe Illustrator" or tarApp is equal to "Termius" or tarApp is equal to "Sublime Text"Â
+	or tarApp is equal to "Obsidian"Â
 	or tarApp is equal to "Slack"Â
 	or tarApp is equal to "Postman" or tarApp is equal to "Insomnia"Â
 	or tarApp is equal to "Postbox")Â
