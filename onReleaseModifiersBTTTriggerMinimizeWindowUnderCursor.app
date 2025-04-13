@@ -1,1 +1,0 @@
-/Users/super/Library/Developer/Xcode/DerivedData/onReleaseModifiersBTTTriggerMinimizeWindowUnderCursor-fjkalmasdsblqgbbjtddoaunfvet/Build/Products/Debug/onReleaseModifiersBTTTriggerMinimizeWindowUnderCursor.app

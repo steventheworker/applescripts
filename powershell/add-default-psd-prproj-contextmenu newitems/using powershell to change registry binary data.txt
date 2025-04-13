@@ -1,0 +1,12 @@
+https://stackoverflow.com/questions/15914109/using-powershell-to-change-registry-binary-data
+
+Read the value (a byte array)
+Modify the array element
+Write the byte array back to the registry key.
+Here's an example:
+
+$key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Connections'
+
+$data = (Get-ItemProperty -Path $key -Name DefaultConnectionSettings).DefaultConnectionSettings
+$data[8] = 9
+Set-ItemProperty -Path $key -Name DefaultConnectionSettings -Value $data

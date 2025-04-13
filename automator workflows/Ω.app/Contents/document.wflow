@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>512</string>
+	<string>527</string>
 	<key>AMApplicationVersion</key>
 	<string>2.10</string>
 	<key>AMDocumentVersion</key>
@@ -51,7 +51,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>on run {input, parameters}	if not input is equal to {} then	else		set deskFolder to path to desktop		tell application "Finder"			reopen			activate			set folderPath to folder "desktop-extras-(nonsort)" of folder "SystemFiles" of folder "important" of deskFolder			set target of Finder window 1 to folderPath		end tell	end if	return inputend run</string>
+					<string>on run {input, parameters}	if not input is equal to {} then	else		tell application "System Events" to set uname to name of current user		tell application "Finder"			reopen			activate			# set folderPath to folder "desktop-extras-(nonsort)" of folder "SystemFiles" of folder "important" of (path to desktop)			set folderPath to folder "Documents" of folder uname of folder "Users" of startup disk						set target of Finder window 1 to folderPath		end tell	end if	return inputend run</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -105,7 +105,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>
-				<string>529.000000:315.000000</string>
+				<string>454.000000:315.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -225,7 +225,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>
-				<string>529.000000:415.000000</string>
+				<string>454.000000:415.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Move Finder Items.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -235,7 +235,7 @@ end run</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>9A6D9695-43D9-4A13-B6ED-1872A1AE5E39</key>
+		<key>B68C9619-B827-4821-8484-106B96A95D5E</key>
 		<dict>
 			<key>from</key>
 			<string>64010DDD-E229-4B2C-BF04-422972FD7AA6 - 64010DDD-E229-4B2C-BF04-422972FD7AA6</string>

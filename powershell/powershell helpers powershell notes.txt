@@ -1,0 +1,39 @@
+﻿-  ===============
+ = GENERAL NOTES=   todo list & most basic information i may forget if i don't pick back up on this soon
+===============  -
+
+
+$data = (Get-ItemProperty -Path $key -Name DefaultConnectionSettings).DefaultConnectionSettings
+$data[8] = 9
+Set-ItemProperty -Path $key -Name DefaultConnectionSettings -Value $data
+
+^ look into these lines, add notes
+
+
+
+
+-  ===============
+ = REGISTRY NOTES=
+===============  -
+        
+HKEY_CLASSES_ROOT   ( HKCR )
+HKEY_CURRENT_CONFIG ( HKCC )
+HKEY_CURRENT_USER   ( HKCU )
+HKEY_LOCAL_MACHINE  ( HKLM )
+HKEY_USERS          (  HKU )
+________________________
+------------------------
+Reg Add
+------------------------
+Reg add $keypath /v subkey...  =  subkey (attached)           ? also updates ?
+Reg add $keypath /ve...        =  main key (detached)           updates key
+------------------------
+REG_SZ
+REG_MULTI_SZ
+REG_DWORD_BIG_ENDIAN
+REG_DWORD
+REG_BINARY
+REG_DWORD_LITTLE_ENDIAN
+REG_LINK
+REG_FULL_RESOURCE_DESCRIPTOR
+REG_EXPAND_SZ

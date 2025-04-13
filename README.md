@@ -1,5 +1,7 @@
 # Install
 
+cd shell && ./compile-all-applescripts.sh
+
 [Watch on YouTube](https://www.youtube.com/channel/UCBcY4PTKNWXDXTt6RsHGRjQ/videos) (video coming soon)
 
 1. After cloning, in the "BTT Settings" folder, open "triggers.bttpreset", then replace all:
