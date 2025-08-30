@@ -19,7 +19,7 @@ temp_dir="$HOME/temp_images"  # Use user's home directory for temporary files
 mkdir -p "$temp_dir"
 
 # Calculate DPI based on output dimensions and desired quality
-dpis=$(convert -ping "$input_pdf" -format "%x\n" info:)
+dpis=$(magick -ping "$input_pdf" -format "%x\n" info:)
 dpi=`echo "${dpis}" | head -1` # first line only
 dpi=$(printf "%.2f" $(echo "$dpi*1.2*$quality" | bc -l)) #make slightly higher quality (1.0 = 120%)
 
@@ -30,13 +30,13 @@ dpi=$(printf "%.2f" $(echo "$dpi*1.2*$quality" | bc -l)) #make slightly higher q
 # desired_width_pixels=$(echo "$output_width * $dpi / 1" | bc)
 # desired_height_pixels=$(echo "$output_height * $dpi / 1" | bc)
 
-# Convert each page of the PDF to an image and invert it
-# convert -density "$dpi" -quality 100 "$input_pdf" -resize "${desired_width_pixels}x${desired_height_pixels}" "$temp_dir/page_%04d.jpg"
-convert -density "$dpi" -quality 100 "$input_pdf" "$temp_dir/page_%04d.jpg"
+# magick each page of the PDF to an image and invert it
+# magick -density "$dpi" -quality 100 "$input_pdf" -resize "${desired_width_pixels}x${desired_height_pixels}" "$temp_dir/page_%04d.jpg"
+magick -density "$dpi" -quality 100 "$input_pdf" "$temp_dir/page_%04d.jpg"
 mogrify -negate "$temp_dir"/*.jpg
 
-# Convert the inverted images back to a PDF
-convert "$temp_dir"/*.jpg "$output_pdf"
+# magick the inverted images back to a PDF
+magick "$temp_dir"/*.jpg "$output_pdf"
 
 # Clean up temporary files
 rm -r "$temp_dir"

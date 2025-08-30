@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>523</string>
+	<string>528</string>
 	<key>AMApplicationVersion</key>
 	<string>2.10</string>
 	<key>AMDocumentVersion</key>
@@ -59,7 +59,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>~/proj/Objective-C/_system_mods/_OpenSettingsStorage</string>
+					<string>~/scripts/obj-c/_OpenSettingsStorage</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
@@ -172,7 +172,7 @@
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>
-				<string>252.000000:252.000000</string>
+				<string>454.000000:252.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>

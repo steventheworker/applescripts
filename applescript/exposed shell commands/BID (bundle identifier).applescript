@@ -31,6 +31,8 @@ if (bid is equal to txt or bid as string is equal to "missing value") then
 		delay 0.2
 		keystroke txt
 		delay 1
+		key down 55
+		delay 0.2
 		key code 36 using {command down}
 		delay 2
 		tell application "Finder"

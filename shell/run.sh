@@ -10,5 +10,5 @@ if [ "$nn" = "cat" ]; then bash ./Desktop/important/catvid.sh;
 elif [ "$nn" = "ap" ]; then bash ./Desktop/important/toggle-airpods.sh
 elif [ "$nn" = "icons" ]; then bash ./Desktop/important/desktop-icons.sh
 elif [ "$nn" = "watch" ]; then fswatch -o "${PWD}" | xargs -n1 -I{} ~/proj/.zsh/gitdiff.sh
-elif [ "$nn" = "invert" ]; then bash ~/proj/.zsh/invert.sh "$2"
+elif [ "$nn" = "invert" ]; then bash ~/scripts/shell/invert.sh "$2"
 fi
